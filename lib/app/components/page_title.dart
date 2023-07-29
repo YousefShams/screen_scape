@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:screen_scape/app/resources/app_styles.dart';
 
 import '../resources/app_values.dart';
 
@@ -9,9 +10,14 @@ class PageTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: AppPadding.titleVerticalPadding,
-      horizontal: AppPadding.pagePadding),
-      child: Text(title, style: Theme.of(context).textTheme.titleLarge),
+      padding: const EdgeInsets.only(top: AppPadding.pagePadding),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: AppPadding.pagePadding,
+        horizontal: AppPadding.pagePadding),
+        child: Text(title, style: Theme.of(context).textTheme.titleLarge?.copyWith(
+          shadows: AppStyles.textSpecialShadows
+        )),
+      ),
     );
   }
 }

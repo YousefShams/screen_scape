@@ -1,6 +1,4 @@
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
-
 import '../../../app/resources/app_databases_keys.dart';
 
 
@@ -11,8 +9,6 @@ class LocalApi {
   static final _instance =  LocalApi._internal();
 
   factory LocalApi() => _instance;
-
-  //static Map<String, Box> databases = {};
 
   static Map<String,Box> databases = {};
 

@@ -4,6 +4,8 @@ class AppPadding {
   static const pagePadding = 20.0;
   static const onboardingImage = 20.0;
   static const titleVerticalPadding = 50.0;
+  static const carouselItems = 10.0;
+
 
 }
 

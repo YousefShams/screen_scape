@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:screen_scape/app/extensions/screen_ext.dart';
+import 'package:screen_scape/presentation/splash/view_model/splash_view_model.dart';
 import '../../../app/resources/app_assets.dart';
-import '../../../app/resources/app_databases_keys.dart';
-import '../../../app/resources/app_routes.dart';
 import '../../../../data/apis/local/local_api.dart';
 
 
@@ -14,6 +13,8 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+
+  final splashVM = SplashViewModel(LocalApi());
 
   @override
   Widget build(BuildContext context) {
@@ -36,11 +37,8 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    final initialRoute = isOnboardingDone(LocalApi()) != true ? AppRoutes.onboardingRoute : AppRoutes.homeRoute;
-    Future.delayed(const Duration(seconds: 4), (){Navigator.pushReplacementNamed(context, initialRoute);});
+    splashVM.init(context);
   }
 
-  bool? isOnboardingDone(LocalApi localApi) {
-    return localApi.get(AppDatabasesKeys.settingsDatabase, AppDatabasesKeys.onboardingDone);
-  }
+
 }

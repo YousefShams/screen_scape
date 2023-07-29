@@ -3,6 +3,7 @@ import '../resources/app_assets.dart';
 
 AppBar defaultAppBar(context) {
   return AppBar(
+    elevation: 0,
     leading: Navigator.canPop(context) ?
     IconButton(
       onPressed: () { Navigator.pop(context); },

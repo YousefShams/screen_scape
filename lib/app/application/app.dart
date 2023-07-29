@@ -14,7 +14,7 @@ class App extends StatelessWidget {
       title: AppConstants.appTitle,
       theme: AppThemes.getTheme(),
       darkTheme: AppThemes.getDarkTheme(),
-      themeMode: ThemeMode.light,
+      themeMode: ThemeMode.dark,
       onGenerateRoute: AppRoutes.onGenerateRoute,
       onGenerateInitialRoutes: (_)=> [PageTransition(AppRoutes.getScreenFromRoute(AppRoutes.splashRoute))]
     );

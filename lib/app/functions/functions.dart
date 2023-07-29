@@ -1,5 +1,12 @@
+import 'dart:io';
+import 'dart:typed_data';
+import 'package:path_provider/path_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:palette_generator/palette_generator.dart';
+import 'package:screen_scape/app/constants/constants.dart';
+import 'package:screen_scape/app/resources/app_assets.dart';
 
 class AppFunctions {
 
@@ -19,6 +26,41 @@ class AppFunctions {
     );
   }
 
+  static String getNetworkImagePath(String imgPath) {
+    return "${AppConstants.imageBaseUrl}$imgPath";
+  }
+
+  static int getGenreIDFromString(String genre) {
+    final genresIDs = AppConstants.genres.keys.toList();
+    final genresStrings = AppConstants.genres.values
+        .map((e) => e.toLowerCase()).toList();
+    final index = genresStrings.indexOf(genre.toLowerCase());
+
+    return genresIDs[index];
+  }
+
+
+  static Future<Image> compressImage(Uint8List image, int qualityPercentage, String name) async {
+
+    var result = await FlutterImageCompress.compressWithList(
+      image,
+      minWidth: 100,
+      minHeight: 100,
+      quality: qualityPercentage,
+    );
+
+    return Image.memory(result);
+  }
+
+  static Future<Color> getImagePalette (ImageProvider imageProvider) async {
+    final PaletteGenerator paletteGenerator = await PaletteGenerator
+        .fromImageProvider(imageProvider);
+    return paletteGenerator.dominantColor!.color;
+  }
+
+  static String capitalizeText(String text) {
+    return "${text[0].toUpperCase()}${text.substring(1)}";
+  }
 
   static String getHourString(int hour, int mins) {
     if (hour == 0) {

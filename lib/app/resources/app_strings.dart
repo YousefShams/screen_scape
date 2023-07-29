@@ -14,6 +14,12 @@ class AppStrings {
   static const onboardingTitle3 = "Search through thousand of movies";
   static const onboardingSubtitle3 = "Can't find the movie you're looking for? Use our powerful search feature to quickly find the movie you want. Search by title, genre, or actor, and get instant results. Let's start right now!";
 
+  static const nowPlaying = "Now Playing";
+  static const topRated = "Top Rated";
+  static const genres = "Genres";
+
+
+
 
   static String get greetingsString {
     final currentHour = DateTime.now().hour;

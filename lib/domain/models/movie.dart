@@ -43,4 +43,14 @@ class Movie {
       return genreIds!.map((id) => Genre(AppConstants.genres[id]!, id)).toList();
     }
   }
+
+  int get dateTimeMillis {
+    final ymd = releaseDate.split('-').map((e) => int.parse(e)).toList();
+    return DateTime(ymd.first, ymd[1], ymd.last).millisecondsSinceEpoch;
+  }
+
+  DateTime get dateTime {
+    final ymd = releaseDate.split('-').map((e) => int.parse(e)).toList();
+    return DateTime(ymd.first, ymd[1], ymd.last);
+  }
 }
