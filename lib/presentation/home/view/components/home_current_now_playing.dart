@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:screen_scape/app/resources/app_values.dart';
-import 'package:screen_scape/domain/models/movie.dart';
+import 'package:screen_scape/domain/models/media.dart';
 
 class HomeCurrentNowPlaying extends StatelessWidget {
-  final List<Movie> movies;
+  final List<Media> movies;
   final int currentIndex;
   const HomeCurrentNowPlaying({Key? key, required this.movies, required this.currentIndex}) : super(key: key);
 
@@ -20,7 +20,10 @@ class HomeCurrentNowPlaying extends StatelessWidget {
           Text(movies[currentIndex].name, style: Theme.of(context).textTheme.labelLarge,
             textAlign: TextAlign.center, overflow: TextOverflow.ellipsis, maxLines: 1,),
           const SizedBox(height: 7),
-          Text(movies[currentIndex].getGenres().first.name, style: Theme.of(context).textTheme.labelMedium,),
+          Text(
+            movies[currentIndex].getGenres().first.name,
+            style: Theme.of(context).textTheme.labelMedium
+          ),
         ],
       ),
     );

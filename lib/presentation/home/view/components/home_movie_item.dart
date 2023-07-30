@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:screen_scape/app/resources/app_fonts.dart';
 import 'package:screen_scape/app/resources/app_values.dart';
-import 'package:screen_scape/domain/models/movie.dart';
+import 'package:screen_scape/domain/models/media.dart';
 import '../../../../app/functions/functions.dart';
 import '../../../../app/resources/app_colors.dart';
 import '../../../../app/resources/app_routes.dart';
 
 class HomeMovieItem extends StatelessWidget {
-  final Movie movie;
+  final Media movie;
   const HomeMovieItem({Key? key, required this.movie}) : super(key: key);
 
   @override

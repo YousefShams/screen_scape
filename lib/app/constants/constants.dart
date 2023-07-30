@@ -9,15 +9,9 @@ class AppConstants {
   //URLS
   static const baseUrl = "https://api.themoviedb.org/3";
   static const imageBaseUrl = "https://image.tmdb.org/t/p/w500";
-  static const nowPlayingMoviesPath = "/movie/now_playing";
-  static const topRatedMoviesPath = "/movie/top_rated";
-  static const discoverMoviesPath = "/discover/movie";
+  static const moviePath = "/movie";
+  static const tvPath = "/tv";
 
-  static const nowPlayingTVsPath = "/tv/now_playing";
-  static const topRatedTVPath = "/tv/top_rated";
-
-  static String movieImagesPath(int movieId) => "/movie/$movieId/images";
-  static String movieCreditsPath(int movieId) => "/movie/$movieId/credits";
 
 
   //SECRETS
@@ -30,11 +24,14 @@ class AppConstants {
     16: 'Animation', 35: 'Comedy', 80: 'Crime', 99: 'Documentary', 18: 'Drama',
     14: 'Fantasy', 36: 'History', 27: 'Horror', 10402: 'Music', 9648: 'Mystery',
     10749: 'Romance', 878: 'Science Fiction', 10770: 'TV Movie', 53: 'Thriller',
-    10752: 'War', 37: 'Western', 10751: 'Family',};
+    10752: 'War', 37: 'Western', 10751: 'Family', 10763: "Anime", 10766: "Soap",
+    10759: "Action & Adventure", 10765: "Sci-Fi & Fantasy", 10764: "Reality",
+    -1 : "Other"
+  };
 
-  static final appViewGenres = ["drama", "thriller", "horror", "animation", "family", "music"];
+  static final appViewGenres = ["drama", "animation", "family", "music"];
 
   //DURATIONS
-  static const splashTime = 0;
+  static const splashTime = 5;
 
 }

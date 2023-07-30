@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:screen_scape/app/extensions/screen_ext.dart';
 
 import '../../../../app/functions/functions.dart';
 import '../../../../app/resources/app_routes.dart';
 import '../../../../app/resources/app_values.dart';
-import '../../../../domain/models/movie.dart';
+import '../../../../domain/models/media.dart';
 
 class GenreMoviesItem extends StatelessWidget {
-  final Movie movie;
+  final Media movie;
   const GenreMoviesItem({Key? key, required this.movie}) : super(key: key);
 
   @override

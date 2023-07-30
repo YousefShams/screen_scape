@@ -1,14 +1,10 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:screen_scape/app/extensions/screen_ext.dart';
 import 'package:screen_scape/app/resources/app_styles.dart';
-import 'package:screen_scape/presentation/movie_details/view/components/movie_details_info.dart';
 
 class MovieDetailsImage extends StatelessWidget {
   final String imgPath;
-  final DateTime releaseDate;
-  const MovieDetailsImage({Key? key, required this.imgPath, required this.releaseDate}) : super(key: key);
+  const MovieDetailsImage({Key? key, required this.imgPath}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

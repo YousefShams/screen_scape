@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:screen_scape/app/resources/app_values.dart';
 import 'package:screen_scape/presentation/genre_movies/view/components/genre_movies_item.dart';
 
-import '../../../../domain/models/movie.dart';
+import '../../../../domain/models/media.dart';
 
 class GenreMoviesGrid extends StatelessWidget {
-  final List<Movie> movies;
+  final List<Media> movies;
   const GenreMoviesGrid({Key? key, required this.movies}) : super(key: key);
 
   @override

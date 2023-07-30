@@ -1,8 +1,8 @@
 import 'package:json_annotation/json_annotation.dart';
-part "movie_member.g.dart";
+part "media_member.g.dart";
 
 @JsonSerializable()
-class MovieMember {
+class MediaMember {
 
 
   final int id;
@@ -11,6 +11,6 @@ class MovieMember {
   final String? imagePath;
   final double popularity;
 
-  const MovieMember(this.id, this.name,
+  const MediaMember(this.id, this.name,
       this.imagePath, this.popularity);
 }

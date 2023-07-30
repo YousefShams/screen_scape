@@ -67,6 +67,7 @@ class AppThemes {
           elevation: 3,
           centerTitle: true,
         ),
+        indicatorColor: AppColors.primaryColor,
         textTheme: TextTheme(
           titleLarge: AppFonts.getBoldStyle(color: Colors.white),
           titleMedium: AppFonts.getMediumStyle(size: AppFonts.mediumFontSize, color: Colors.blueGrey[50]!),

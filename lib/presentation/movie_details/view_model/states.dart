@@ -1,12 +1,12 @@
-abstract class MovieDetailsState {}
+abstract class MediaDetailsState {}
 
-class MovieDetailsInitial extends MovieDetailsState {}
+class MediaDetailsInitial extends MediaDetailsState {}
 
-class MovieDetailsLoading extends MovieDetailsState {}
+class MediaDetailsLoading extends MediaDetailsState {}
 
-class MovieDetailsSuccess extends MovieDetailsState {}
+class MediaDetailsSuccess extends MediaDetailsState {}
 
-class MovieDetailsError extends MovieDetailsState {
+class MediaDetailsError extends MediaDetailsState {
   final String message;
-  MovieDetailsError(this.message);
+  MediaDetailsError(this.message);
 }

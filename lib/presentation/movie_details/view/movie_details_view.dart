@@ -1,15 +1,12 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:screen_scape/app/extensions/screen_ext.dart';
+import 'package:screen_scape/domain/models/media.dart';
 import 'package:screen_scape/presentation/movie_details/view/components/movie_details_bottom.dart';
 import 'package:screen_scape/presentation/movie_details/view/components/movie_details_cubit_widget.dart';
 import 'package:screen_scape/presentation/movie_details/view/components/movie_details_image.dart';
 import 'package:screen_scape/presentation/movie_details/view/components/movie_details_image_blur.dart';
 import 'package:screen_scape/presentation/movie_details/view/components/movie_details_info.dart';
-
 import '../../../app/functions/functions.dart';
-import '../../../domain/models/movie.dart';
 
 
 class MovieDetailsScreen extends StatelessWidget {
@@ -17,24 +14,39 @@ class MovieDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final movie = ModalRoute.of(context)!.settings.arguments as Movie;
+    final media = ModalRoute.of(context)!.settings.arguments as Media;
     return MovieDetailsCubitWidget(
-      movie: movie,
+      media: media,
       builder: (cubit) =>
           Scaffold(
             body: Stack(
               children: [
-                MovieDetailsBlur(networkImagePath: AppFunctions.getNetworkImagePath(movie.imgPath)),
+                MovieDetailsBlur(networkImagePath:
+                AppFunctions.getNetworkImagePath(media.imgPath)),
                 Column(
                   children: [
                     MovieDetailsImage(
-                      imgPath: AppFunctions.getNetworkImagePath(movie.imgPath),
-                        releaseDate: movie.dateTime),
-                    MovieDetailsInfo(releaseDate: movie.dateTime)
+                      imgPath: AppFunctions.getNetworkImagePath(media.imgPath),
+                    ),
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        MovieDetailsInfo(
+                            icon: Icons.date_range_rounded,
+                            info: "${media.releaseDate.getDateTime().year}/"
+                                "${media.releaseDate.getDateTime().month}"
+                        ),
+                        const SizedBox(width: 10),
+                        MovieDetailsInfo(info: media.popularity.round().toString(),
+                            icon: Icons.trending_up_rounded)
+                      ],
+                    )
                   ],
                 ),
                 MovieDetailsBottom(
-                  movie: movie,
+                  movie: media,
+                  videos: cubit.trailers,
                   imagesPaths: cubit.imagesPaths,
                   credits: cubit.credits,
                 )

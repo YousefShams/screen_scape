@@ -1,9 +1,9 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:screen_scape/domain/models/movie_member.dart';
+import 'package:screen_scape/domain/models/media_member.dart';
 part "cast_member.g.dart";
 
 @JsonSerializable()
-class CastMember extends MovieMember {
+class CastMember extends MediaMember {
 
   final String character;
 

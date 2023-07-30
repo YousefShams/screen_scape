@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:screen_scape/presentation/home/view/components/home_movie_item.dart';
-import '../../../../domain/models/movie.dart';
+import '../../../../domain/models/media.dart';
 
 class HomeMoviesList extends StatelessWidget {
-  final List<Movie> movies;
+  final List<Media> movies;
   const HomeMoviesList({Key? key, required this.movies}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 200,
+      height: 210,
       child: ListView.builder(
         physics: const BouncingScrollPhysics(),
         scrollDirection: Axis.horizontal,

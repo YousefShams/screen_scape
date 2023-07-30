@@ -3,8 +3,9 @@ import 'package:screen_scape/app/resources/app_values.dart';
 
 
 class MovieDetailsInfo extends StatelessWidget {
-  final DateTime releaseDate;
-  const MovieDetailsInfo({Key? key, required this.releaseDate}) : super(key: key);
+  final String info;
+  final IconData icon;
+  const MovieDetailsInfo({Key? key, required this.info, required this.icon}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,13 +20,13 @@ class MovieDetailsInfo extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          const Padding(
-            padding: EdgeInsets.only(bottom: 2.0),
-            child: Icon(Icons.date_range_rounded, size: 20,),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 2.0),
+            child: Icon(icon, size: 20,),
           ),
           const SizedBox(width: 5),
           Text(
-            "${releaseDate.year}",
+            info,
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.labelLarge?.copyWith(
               color :Theme.of(context).textTheme.labelMedium?.color,
