@@ -4,12 +4,12 @@ import 'package:screen_scape/app/resources/app_fonts.dart';
 import 'package:screen_scape/app/resources/app_routes.dart';
 import 'package:screen_scape/app/resources/app_styles.dart';
 import 'package:screen_scape/app/resources/app_values.dart';
-import 'package:screen_scape/domain/models/genre_movies_model.dart';
-import 'package:screen_scape/domain/models/movie.dart';
+import 'package:screen_scape/domain/models/genre_media_model.dart';
+import 'package:screen_scape/domain/models/media.dart';
 import '../../../../app/resources/app_colors.dart';
 
 class HomeGenreItem extends StatelessWidget {
-  final List<Movie> movies;
+  final List<Media> movies;
   final String genreName;
   final Color shadowColor;
   const HomeGenreItem({Key? key, required this.movies, required this.genreName, required this.shadowColor}) : super(key: key);
@@ -18,9 +18,9 @@ class HomeGenreItem extends StatelessWidget {
   Widget build(BuildContext context) {
     const double size = 180;
     const bR = BorderRadius.only(
-      topLeft: Radius.circular(15),
-      topRight: Radius.circular(70),
-      bottomRight: Radius.circular(15),
+      topLeft: Radius.circular(70),
+      topRight: Radius.circular(15),
+      bottomRight: Radius.circular(70),
       bottomLeft: Radius.circular(15),
     );
 
@@ -31,7 +31,7 @@ class HomeGenreItem extends StatelessWidget {
         width: size,
         child: GestureDetector(
           onTap: () { Navigator.pushNamed(context, AppRoutes.genreMoviesRoute,
-            arguments: GenreMovies(genreName, movies));
+            arguments: GenreMedia(genreName, movies));
             },
           child: Stack(
             children: [

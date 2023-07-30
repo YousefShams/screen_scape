@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:screen_scape/app/extensions/screen_ext.dart';
 import 'package:screen_scape/app/functions/functions.dart';
-import 'package:screen_scape/app/resources/app_assets.dart';
 import 'package:screen_scape/app/resources/app_colors.dart';
 import 'package:screen_scape/app/resources/app_values.dart';
 
@@ -15,6 +14,7 @@ class MovieCreditsItem extends StatelessWidget {
   Widget build(BuildContext context) {
     const p = AppPadding.pagePadding;
     return Container(
+      alignment: Alignment.center,
       margin: const EdgeInsets.fromLTRB(p, p, p, p),
       width: context.getWidth()*0.33,
       child: Column(

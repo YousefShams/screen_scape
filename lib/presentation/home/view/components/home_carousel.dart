@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:screen_scape/app/extensions/screen_ext.dart';
 import 'package:screen_scape/presentation/home/view/components/home_carousel_item.dart';
-import '../../../../domain/models/movie.dart';
+import '../../../../domain/models/media.dart';
 
 
 class HomeCarousel extends StatelessWidget {
-  final List<Movie> movies;
+  final List<Media> movies;
   final List<Color> colors;
   final PageController pageController;
   const HomeCarousel({Key? key, required this.movies, required this.pageController, required this.colors}) : super(key: key);

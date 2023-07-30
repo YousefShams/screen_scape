@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:screen_scape/app/extensions/screen_ext.dart';
 
 class MovieFullScreenImage extends StatelessWidget {
   final String imagePath;
@@ -13,8 +14,11 @@ class MovieFullScreenImage extends StatelessWidget {
         leading: IconButton(onPressed: (){Navigator.pop(context);},
             icon: Icon(Icons.arrow_back_ios_rounded, color: Theme.of(context).textTheme.bodyMedium?.color,)),
       ),
-      body: Center(
-        child: InteractiveViewer(
+      body: InteractiveViewer(
+        child: Container(
+          alignment: Alignment.center,
+          height: context.getHeight(),
+          width: double.maxFinite,
           child: Image.network(
             imagePath, width: double.maxFinite, fit: BoxFit.contain,
             isAntiAlias: true,

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:screen_scape/app/resources/app_routes.dart';
 import 'package:screen_scape/app/resources/app_values.dart';
-import 'package:screen_scape/domain/models/movie.dart';
+import 'package:screen_scape/domain/models/media.dart';
 import 'package:screen_scape/presentation/home/view_model/cubit.dart';
 
 import '../../../../app/functions/functions.dart';
 
 
 class HomeCarouselItem extends StatelessWidget {
-  final Movie movie;
+  final Media movie;
   final Color color;
   final int index;
   const HomeCarouselItem({Key? key, required this.movie, required this.color, required this.index}) : super(key: key);

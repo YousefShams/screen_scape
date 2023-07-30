@@ -18,7 +18,7 @@ class AppStrings {
   static const topRated = "Top Rated";
   static const genres = "Genres";
 
-
+  static const emptyOverview = "We don't have an overview translated in English yet.";
 
 
   static String get greetingsString {

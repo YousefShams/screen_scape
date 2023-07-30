@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'movie.dart';
+part of 'tv_show.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-Movie _$MovieFromJson(Map<String, dynamic> json) => Movie(
-      json['title'] as String,
+TVShow _$TVShowFromJson(Map<String, dynamic> json) => TVShow(
+      json['name'] as String,
       json['poster_path'] as String?,
       json['overview'] as String,
       (json['vote_average'] as num).toDouble(),
@@ -16,11 +16,14 @@ Movie _$MovieFromJson(Map<String, dynamic> json) => Movie(
       json['id'] as int,
       (json['genre_ids'] as List<dynamic>?)?.map((e) => e as int).toList(),
       (json['popularity'] as num).toDouble(),
-      json['release_date'] as String,
-      json['runtime'] as int?,
+      json['first_air_date'] as String,
+      (json['episode_run_time'] as List<dynamic>?)
+          ?.map((e) => e as int)
+          .toList(),
+      json['seasons'] as List<dynamic>?,
     );
 
-Map<String, dynamic> _$MovieToJson(Movie instance) => <String, dynamic>{
+Map<String, dynamic> _$TVShowToJson(TVShow instance) => <String, dynamic>{
       'title': instance.name,
       'id': instance.id,
       'poster_path': instance.imgPath,
@@ -31,5 +34,6 @@ Map<String, dynamic> _$MovieToJson(Movie instance) => <String, dynamic>{
       'genre_ids': instance.genreIds,
       'popularity': instance.popularity,
       'releaseDate': instance.releaseDate,
-      'runtime': instance.durationMins,
+      'episode_run_time': instance.runtimes,
+      'seasons': instance.seasons,
     };

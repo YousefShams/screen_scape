@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:screen_scape/app/components/page_title.dart';
-import 'package:screen_scape/app/functions/functions.dart';
-import 'package:screen_scape/app/resources/app_routes.dart';
-import 'package:screen_scape/domain/models/genre_movies_model.dart';
+import 'package:screen_scape/domain/models/genre_media_model.dart';
 import 'package:screen_scape/presentation/genre_movies/view/components/genre_movies_grid.dart';
-
 import 'components/genre_movies_title.dart';
 
 class GenreMovieScreen extends StatelessWidget {
@@ -12,7 +8,7 @@ class GenreMovieScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final genreMovies = ModalRoute.of(context)!.settings.arguments as GenreMovies;
+    final genreMovies = ModalRoute.of(context)!.settings.arguments as GenreMedia;
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

@@ -3,71 +3,95 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:screen_scape/app/constants/constants.dart';
 import 'package:screen_scape/app/extensions/screen_ext.dart';
 import 'package:screen_scape/app/resources/app_colors.dart';
+import 'package:screen_scape/app/resources/app_routes.dart';
+import 'package:screen_scape/data/mapper/mapper.dart';
+import 'package:screen_scape/data/paths/current_path.dart';
+import 'package:screen_scape/data/paths/paths.dart';
+import 'package:screen_scape/data/paths/tv_show_paths.dart';
+import 'package:screen_scape/data/repositories/media_repository.dart';
 import 'package:screen_scape/presentation/home/view_model/states.dart';
-import '../../../data/repositories/movies_repository.dart';
-import '../../../domain/models/movie.dart';
+import '../../../data/paths/movie_paths.dart';
+import '../../../domain/models/media.dart';
 
 
 class HomeCubit extends Cubit<HomeState> {
-  final MoviesRepository moviesRepo;
-  HomeCubit(this.moviesRepo) : super(HomeInitialState());
+  final MediaRepository mediaRepo;
+  final Paths paths;
+  HomeCubit(this.mediaRepo, this.paths) : super(HomeInitialState());
 
   static HomeCubit get(context) => BlocProvider.of(context);
 
   //VARIABLES
-  List<Movie> nowPlayingMovies = [];
-  List<Movie> topRatedMovies = [];
-  List<List<Movie>> genresMovies = [];
-  List<Movie> genresPopularMovie = [];
+  List<Media> nowPlayingMedia = [];
+  List<Media> topRatedMedia = [];
+  List<List<Media>> genresMedia = [];
+  List<Media> genresPopularMedia = [];
   List<Color> nowPlayingColors = [];
-
   static const viewportFraction = 0.5;
   final pageController = PageController(viewportFraction: viewportFraction);
-  double currentIndex = 0;
+  double currentMediaIndex = 0;
+  late int currentIndex;
+
 
 
   //EVENTS
-  void getMoviesLists() async {
-    final nowPlayingMoviesPage = await _getMoviesList(AppConstants.nowPlayingMoviesPath);
-    nowPlayingMovies.addAll(nowPlayingMoviesPage);
-    nowPlayingMovies.sort((a,b)=> b.dateTimeMillis.compareTo(a.dateTimeMillis));
-    nowPlayingColors = getColors(nowPlayingMovies.length);
-    topRatedMovies = await _getMoviesList(AppConstants.topRatedMoviesPath);
-    genresMovies = await _getMoviesOfGenres();
-    genresPopularMovie = genresMovies.map((e) => e.first).toList();
+  void getMediaLists() async {
+    currentIndex = paths is MoviesPaths ? 0 : 1;
+    final nowPlayingMoviesPage = await _getMediaList("${paths.basePath}${Paths.popularPath}");
+    nowPlayingMedia.addAll(List<Media>.from(nowPlayingMoviesPage));
+    nowPlayingMedia.sort((a,b)=> b.releaseDate.getDateTime().millisecondsSinceEpoch
+        .compareTo(a.releaseDate.getDateTime().millisecondsSinceEpoch));
+    nowPlayingColors = getColors(nowPlayingMedia.length);
+    topRatedMedia = List<Media>.from(await _getMediaList("${paths.basePath}${Paths.topRatedPath}"));
+    genresMedia = List<List<Media>>.from(await _getMediaOfGenres());
+    genresPopularMedia = genresMedia.map((e) => e.first).toList();
   }
 
-  Future<List<Movie>> _getMoviesList(String listPath, {int page = 1}) async {
+  Future<List<Media>> _getMediaList(String listPath, {int page = 1}) async {
     emit(HomeLoadingState());
-    List<Movie> moviesResult = [];
-    final result = await moviesRepo.getMoviesList(listPath, page: page);
+    List<Media> mediaResult = [];
+    final result = await mediaRepo.getMediaList(listPath, page: page);
     result.fold((failure) {
       emit(HomeErrorState(failure.message));
-    }, (movies) {
-      moviesResult.addAll(movies);
+    }, (media) {
+      mediaResult.addAll(media);
       emit(HomeSuccessState());
     }
     );
-    return moviesResult.toList();
+    return mediaResult.toList();
   }
 
-  Future<List<List<Movie>>> _getMoviesOfGenres() async {
+  Future<List<List<Media>>> _getMediaOfGenres() async {
     emit(HomeLoadingState());
-    final result = await moviesRepo.getMoviesOfGenres(
-        AppConstants.discoverMoviesPath, AppConstants.appViewGenres);
+    final result = await mediaRepo.getMediaOfGenres(
+        Paths.discoverPath(paths.basePath), AppConstants.appViewGenres);
 
-    List<List<Movie>> moviesLists = [];
+    List<List<Media>> mediaLists = [];
 
     result.fold((failure) {
       emit(HomeErrorState(failure.message));
     }, (moviesGenresLists) {
-      moviesLists.addAll(moviesGenresLists);
+      mediaLists.addAll(moviesGenresLists);
       emit(HomeSuccessState());
     }
     );
-    return moviesLists;
+    return mediaLists;
   }
-  
+
+  void onBottomNavChange(int index, context) {
+    if(index==1 && currentIndex==0) {
+      CurrentEntity.updateCurrentEntity(TVShowPaths(), TVShowMapper());
+    }
+    else if(index==0 && currentIndex==1) {
+      CurrentEntity.updateCurrentEntity(MoviesPaths(), MovieMapper());
+    }
+
+    if(currentIndex!=index) {
+      currentIndex = index;
+      Navigator.pushReplacementNamed(context, AppRoutes.homeRoute);
+    }
+  }
+
   List<Color> getColors(int length) {
     return List.generate(length, (index) => AppColors.getRandomColor());
   }
@@ -75,14 +99,14 @@ class HomeCubit extends Cubit<HomeState> {
   void carouselPositionListen(BuildContext context) {
     final itemWidth = context.getWidth() * viewportFraction;
     pageController.addListener(() {
-      currentIndex = ((pageController.offset/itemWidth)-0.2).ceil().toDouble();
+      currentMediaIndex = ((pageController.offset/itemWidth)-0.2).ceil().toDouble();
       emit(HomeUpdateState());
     });
   }
 
 
   double getScale(int index) {
-    if(currentIndex == index) {
+    if(currentMediaIndex == index) {
       return 1;
     }
     else {

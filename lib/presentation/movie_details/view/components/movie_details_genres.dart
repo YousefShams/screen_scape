@@ -14,7 +14,8 @@ class MovieDetailsGenres extends StatelessWidget {
         padding: const EdgeInsets.fromLTRB(p,0,p,p),
         child: Text(genres.join(", "),
             style: Theme.of(context).textTheme.labelMedium?.
-            copyWith(fontSize: AppFonts.smallerFontSize), overflow: TextOverflow.ellipsis,
+            copyWith(fontSize: AppFonts.smallerFontSize),
+          overflow: TextOverflow.ellipsis, maxLines: 2, textAlign: TextAlign.center,
         ),
       ),
     );

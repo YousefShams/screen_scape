@@ -21,18 +21,34 @@ class HomeScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const HomeTitle(title: AppStrings.nowPlaying),
-              HomeCarousel(movies: cubit.nowPlayingMovies, colors: cubit.nowPlayingColors,
+              HomeCarousel(movies: cubit.nowPlayingMedia, colors: cubit.nowPlayingColors,
                   pageController: cubit.pageController),
-              HomeCurrentNowPlaying(movies: cubit.nowPlayingMovies,
-              currentIndex: cubit.currentIndex.toInt(),),
+              HomeCurrentNowPlaying(movies: cubit.nowPlayingMedia,
+              currentIndex: cubit.currentMediaIndex.toInt(),),
               const HomeTitle(title: AppStrings.topRated),
-              HomeMoviesList(movies: cubit.topRatedMovies),
+              HomeMoviesList(movies: cubit.topRatedMedia),
               const HomeTitle(title: AppStrings.genres),
               HomeGenresList(genres: AppConstants.appViewGenres,
-                  genreMovies: cubit.genresMovies)
+                  genreMovies: cubit.genresMedia)
 
             ],
           ),
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          showSelectedLabels: false,
+          showUnselectedLabels: false,
+          currentIndex: cubit.currentIndex,
+          onTap: (index){cubit.onBottomNavChange(index, context);},
+          items: const [
+            BottomNavigationBarItem(
+              label: "movies",
+              icon: Icon(Icons.local_movies_rounded),
+            ),
+            BottomNavigationBarItem(
+              label: "tv",
+              icon: Icon(Icons.live_tv_rounded),
+            )
+          ],
         ),
       )
     );

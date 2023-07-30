@@ -1,31 +1,48 @@
+
 class BaseResponse {
   final int statusCode;
   const BaseResponse(this.statusCode);
 }
 
 
-class MovieResponse extends BaseResponse {
-
+class MediaResponse extends BaseResponse {
   final Map<String,dynamic> data;
-  const MovieResponse(this.data, {required int status}) : super(status);
-
+  const MediaResponse(this.data, {required int status}) : super(status);
 }
 
-class MoviesListResponse extends BaseResponse {
-
+class MediaListResponse extends BaseResponse {
   final List<Map<String,dynamic>> data;
-  const MoviesListResponse(this.data, {required int status}) : super(status);
+  const MediaListResponse(this.data, {required int status}) : super(status);
+}
 
+class MovieResponse extends MediaResponse {
+  MovieResponse(super.data, {required super.status});
+}
+
+class MovieListResponse extends MediaResponse {
+  MovieListResponse(super.data, {required super.status});
+}
+
+class TVShowResponse extends MediaResponse {
+  TVShowResponse(super.data, {required super.status});
+}
+
+class TVShowListResponse extends MediaResponse {
+  TVShowListResponse(super.data, {required super.status});
 }
 
 class ImagesListResponse extends BaseResponse {
-
   final List<Map<String,dynamic>> data;
   const ImagesListResponse(this.data, {required int status}) : super(status);
-
 }
 
 class CreditsResponse extends BaseResponse {
   final Map<String,dynamic> data;
   const CreditsResponse(this.data, {required int status}) : super(status);
 }
+
+class VideosResponse extends BaseResponse {
+  final Map<String,dynamic> data;
+  const VideosResponse(this.data, {required int status}) : super(status);
+}
+

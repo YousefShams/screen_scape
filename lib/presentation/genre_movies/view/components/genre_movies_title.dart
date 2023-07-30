@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:screen_scape/app/resources/app_values.dart';
 
 import '../../../../app/components/page_title.dart';
 import '../../../../app/functions/functions.dart';
@@ -9,6 +10,8 @@ class GenreMoviesTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PageTitle(title: "${AppFunctions.capitalizeText(title)} Movies");
+    return Padding(
+        padding: const EdgeInsets.only(top: AppPadding.pagePadding),
+        child: PageTitle(title: "${AppFunctions.capitalizeText(title)} Movies"));
   }
 }

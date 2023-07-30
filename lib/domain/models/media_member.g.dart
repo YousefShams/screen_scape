@@ -2,20 +2,20 @@
 
 // ignore_for_file: unused_element
 
-part of 'movie_member.dart';
+part of 'media_member.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-MovieMember _$MovieMemberFromJson(Map<String, dynamic> json) => MovieMember(
+MediaMember _$MediaMemberFromJson(Map<String, dynamic> json) => MediaMember(
       json['id'] as int,
       json['name'] as String,
       json['profile_path'] as String?,
       (json['popularity'] as num).toDouble(),
     );
 
-Map<String, dynamic> _$MovieMemberToJson(MovieMember instance) =>
+Map<String, dynamic> _$MediaMemberToJson(MediaMember instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,

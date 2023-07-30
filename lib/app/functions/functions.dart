@@ -1,12 +1,9 @@
-import 'dart:io';
 import 'dart:typed_data';
-import 'package:path_provider/path_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:palette_generator/palette_generator.dart';
 import 'package:screen_scape/app/constants/constants.dart';
-import 'package:screen_scape/app/resources/app_assets.dart';
 
 class AppFunctions {
 
@@ -26,7 +23,8 @@ class AppFunctions {
     );
   }
 
-  static String getNetworkImagePath(String imgPath) {
+  static String getNetworkImagePath(String? imgPath) {
+    if(imgPath==null) "https://www.kvitkov.cz/wp-content/uploads/2020/10/image-placeholder.png";
     return "${AppConstants.imageBaseUrl}$imgPath";
   }
 

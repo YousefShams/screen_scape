@@ -12,3 +12,12 @@ extension ScreenSize on BuildContext {
   }
   
 }
+
+extension DateFromString on String {
+
+  DateTime getDateTime() {
+    final ymd = split('-').map((e) => int.parse(e)).toList();
+    return DateTime(ymd.first, ymd[1], ymd.last);
+  }
+
+}

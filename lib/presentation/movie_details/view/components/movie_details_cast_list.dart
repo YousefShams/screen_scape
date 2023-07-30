@@ -11,16 +11,20 @@ class MovieCreditsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 200, width: double.infinity,
+      height: 210, width: double.infinity,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         physics: const BouncingScrollPhysics(),
         itemCount: credits.cast.length,
         itemBuilder: (context,index) {
           if(index == 0) {
-            final item =credits.crew.first;
-            return MovieCreditsItem(imagePath: item.imagePath,
-              name: item.name, role: item.job);
+            if(credits.crew.isNotEmpty) {
+              final item =credits.crew.first;
+              return MovieCreditsItem(imagePath: item.imagePath,
+                  name: item.name, role: item.job);
+            }
+            else { return const SizedBox.shrink(); }
+
           }
           else {
             final item =credits.cast[index-1];

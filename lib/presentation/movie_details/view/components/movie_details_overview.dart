@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:screen_scape/app/resources/app_strings.dart';
 import 'package:screen_scape/app/resources/app_values.dart';
 
 class MovieDetailsOverview extends StatelessWidget {
@@ -9,7 +10,7 @@ class MovieDetailsOverview extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(AppPadding.pagePadding),
-      child: Text(overview,
+      child: Text( overview.isEmpty ? AppStrings.emptyOverview : overview,
         style: Theme.of(context).textTheme.bodyMedium,
       )
     );
