@@ -1,6 +1,8 @@
 
 // ignore_for_file: curly_braces_in_flow_control_structures
 
+import 'package:screen_scape/app/resources/app_assets.dart';
+
 class AppStrings {
 
   static const onboardingTitle1 = "Welcome to ScreenScape!";
@@ -20,6 +22,16 @@ class AppStrings {
 
   static const emptyOverview = "We don't have an overview translated in English yet.";
 
+  static const searchTitle = "Search";
+  static const searchHint = "Search here..";
+  static const searchEmpty = "Search for movie, tv-shows or people...";
+
+  static const watchlistTitle = "Your Watchlist ❤️";
+  static const watchlistEmpty = "Your watchlist is empty, you can add movies"
+      " or tv-shows to the watchlist and come back later";
+
+  static const watchlistSuccessAdd = "successfully added to your watchlist!";
+  static const watchlistSuccessRemove = "successfully removed from your watchlist";
 
   static String get greetingsString {
     final currentHour = DateTime.now().hour;

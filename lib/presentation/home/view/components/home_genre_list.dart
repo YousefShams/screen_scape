@@ -16,7 +16,8 @@ class HomeGenresList extends StatelessWidget {
         physics: const BouncingScrollPhysics(),
         scrollDirection: Axis.horizontal,
         itemCount: genres.length,
-        itemBuilder: (_,index) => HomeGenreItem(
+        itemBuilder: (_,index) => genreMovies[index].isEmpty ? const SizedBox.shrink():
+        HomeGenreItem(
           genreName: genres[index],
           movies: genreMovies[index], shadowColor: AppColors.appGenresColors[index],)
       ),

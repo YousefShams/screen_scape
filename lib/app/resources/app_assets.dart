@@ -8,6 +8,12 @@ class AppAssets {
   static const onboarding2 = "$imagePath/onboarding2.json";
   static const onboarding3 = "$imagePath/onboarding3.json";
   static const error = "$imagePath/error.json";
+  static const search = "$imagePath/search.json";
+  static const watchlist = "$imagePath/watchlist.json";
+  static const profile = "$imagePath/profile.json";
+
+
+
 
 
 

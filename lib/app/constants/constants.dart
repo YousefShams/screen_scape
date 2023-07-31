@@ -29,7 +29,7 @@ class AppConstants {
     -1 : "Other"
   };
 
-  static final appViewGenres = ["drama", "animation", "family", "music"];
+  static final List<int> appViewGenres = [18, 16, 27, 10402, 10751, 99, 10749];
 
   //DURATIONS
   static const splashTime = 5;

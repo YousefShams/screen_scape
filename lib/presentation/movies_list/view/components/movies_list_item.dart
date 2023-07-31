@@ -5,16 +5,22 @@ import '../../../../app/resources/app_routes.dart';
 import '../../../../app/resources/app_values.dart';
 import '../../../../domain/models/media.dart';
 
-class GenreMoviesItem extends StatelessWidget {
+class MoviesListItem extends StatelessWidget {
   final Media movie;
-  const GenreMoviesItem({Key? key, required this.movie}) : super(key: key);
+  final Function? onAfterPopping;
+  const MoviesListItem({Key? key, required this.movie, this.onAfterPopping}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     const p = AppPadding.pagePadding;
     final image = NetworkImage(AppFunctions.getNetworkImagePath(movie.imgPath));
     return GestureDetector(
-      onTap: (){ Navigator.pushNamed(context, AppRoutes.movieDetailsRoute, arguments: movie);},
+      onTap: (){
+        Navigator.pushNamed(context, AppRoutes.movieDetailsRoute,
+          arguments: movie).then((_) {
+            if(onAfterPopping!=null) onAfterPopping!();
+        });
+        },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,

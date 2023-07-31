@@ -5,12 +5,13 @@ import '../resources/app_values.dart';
 
 class PageTitle extends StatelessWidget {
   final String title;
-  const PageTitle({Key? key, required this.title}) : super(key: key);
+  final bool extraTopPadding;
+  const PageTitle({Key? key, required this.title, this.extraTopPadding = true}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: AppPadding.pagePadding),
+      padding: EdgeInsets.only(top: (extraTopPadding) ? AppPadding.pagePadding : 0),
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: AppPadding.pagePadding,
         horizontal: AppPadding.pagePadding),

@@ -27,6 +27,8 @@ class MovieDetailsScreen extends StatelessWidget {
                   children: [
                     MovieDetailsImage(
                       imgPath: AppFunctions.getNetworkImagePath(media.imgPath),
+                      bookmarked : cubit.bookmarked,
+                      onAdd : () { cubit.toggleOnWatchlist(media); }
                     ),
                     Row(
                       mainAxisSize: MainAxisSize.max,

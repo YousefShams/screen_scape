@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:screen_scape/app/resources/app_colors.dart';
-import 'package:screen_scape/domain/models/credits.dart';
+import 'package:screen_scape/domain/models/member_credits.dart';
 import 'package:screen_scape/presentation/movie_details/view/components/media_details_videos.dart';
 import 'package:screen_scape/presentation/movie_details/view/components/movie_details_cast_list.dart';
 import 'package:screen_scape/presentation/movie_details/view/components/movie_details_genres.dart';
@@ -17,7 +17,7 @@ import '../../../../domain/models/media_video.dart';
 
 class MovieDetailsBottom extends StatefulWidget {
   final Media movie;
-  final Credits credits;
+  final MemberCredits credits;
   final List<MediaVideo> videos;
   final List<String> imagesPaths;
   const MovieDetailsBottom({Key? key, required this.movie, required this.imagesPaths, required this.credits, required this.videos}) : super(key: key);
@@ -69,7 +69,7 @@ class _MovieDetailsBottomState extends State<MovieDetailsBottom> {
                 MovieDetailsRating(rating: widget.movie.rating),
                 MovieDetailsOverview(overview: widget.movie.overview),
                 MovieDetailsGenres(genres: widget.movie.getGenres().map((e) => e.name).toList()),
-                MediaDetailsVideos(videos: widget.videos),
+                //MediaDetailsVideos(videos: widget.videos),
                 MovieDetailsImages(imagesPaths: widget.imagesPaths),
                 MovieCreditsList(credits: widget.credits),
               ],

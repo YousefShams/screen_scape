@@ -5,6 +5,12 @@ abstract class Paths {
 
   static String get topRatedPath   => "/top_rated";
 
+  static String get searchPath   => "/search/multi";
+
+  static String personDetailsPath(id)   => "/person/$id";
+
+  static String get personDetailsQuery   => r"append_to_response=combined_credits%2Cimages";
+
   static String detailsPath(String id) => "/$id";
 
   static String imagesPath (int movieId) => "/$movieId/images";
@@ -14,7 +20,8 @@ abstract class Paths {
   static String videosPath(int movieId) => "/$movieId/videos";
 
   static String discoverPath(String base) => "/discover$base";
-
-
+  
   String get basePath;
+
+  String get topPath;
 }

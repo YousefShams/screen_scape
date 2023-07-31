@@ -9,7 +9,7 @@ class MovieDetailsBlur extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return AnimatedContainer(
       width: double.maxFinite, height: context.getHeight(),
       decoration: BoxDecoration(
         image: DecorationImage(
@@ -17,9 +17,11 @@ class MovieDetailsBlur extends StatelessWidget {
           fit: BoxFit.cover,
         ),
       ),
+      duration: const Duration(seconds: 3),
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 50, sigmaY: 50),
-        child: Container(
+        child: AnimatedContainer(
+          duration: const Duration(seconds: 3),
           color: Colors.black.withOpacity(0.2),
         ),
       ),

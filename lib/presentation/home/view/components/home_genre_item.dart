@@ -4,7 +4,9 @@ import 'package:screen_scape/app/resources/app_fonts.dart';
 import 'package:screen_scape/app/resources/app_routes.dart';
 import 'package:screen_scape/app/resources/app_styles.dart';
 import 'package:screen_scape/app/resources/app_values.dart';
-import 'package:screen_scape/domain/models/genre_media_model.dart';
+import 'package:screen_scape/data/paths/current_path.dart';
+import 'package:screen_scape/data/paths/paths.dart';
+import 'package:screen_scape/domain/models/movies_list_model.dart';
 import 'package:screen_scape/domain/models/media.dart';
 import '../../../../app/resources/app_colors.dart';
 
@@ -30,8 +32,10 @@ class HomeGenreItem extends StatelessWidget {
       child: SizedBox(
         width: size,
         child: GestureDetector(
-          onTap: () { Navigator.pushNamed(context, AppRoutes.genreMoviesRoute,
-            arguments: GenreMedia(genreName, movies));
+          onTap: () { 
+            final path = Paths.discoverPath(CurrentEntity.getCurrentEntityPath().basePath);
+            Navigator.pushNamed(context, AppRoutes.moviesListRoute,
+              arguments: MoviesListData(genreName, movies,path, AppFunctions.getGenreIDFromString(genreName)));
             },
           child: Stack(
             children: [

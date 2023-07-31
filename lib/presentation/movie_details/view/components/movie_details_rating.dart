@@ -12,7 +12,7 @@ class MovieDetailsRating extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           const Icon(Icons.star_rounded, color: Colors.orange),
-          Text("$rating", style: Theme.of(context).textTheme.labelMedium,),
+          Text(rating.toStringAsPrecision(2), style: Theme.of(context).textTheme.labelMedium,),
 
         ],),
     );

@@ -12,7 +12,7 @@ abstract class BaseMediaDatasource {
   Future<MediaListResponse> getMediaList(String listPath, {int page = 1});
 
   Future<List<MediaListResponse>> getMediaOfGenres(String listPath,
-      List<String> genres, {int page = 1});
+      List<int> genres, {int page = 1});
 
   Future<ImagesListResponse> getMediaImages(String path);
   
@@ -20,23 +20,16 @@ abstract class BaseMediaDatasource {
 
   Future<VideosResponse> getMediaVideos(String path);
 
+  Future<SearchResponse> getSearchedMedia(String path, String searchText);
+
+  Future<PersonResponse> getPersonDetails(int id);
+
 }
 
 
 class MediaDatasource extends BaseMediaDatasource {
   final RemoteApi _remoteApi;
-
-
   MediaDatasource(this._remoteApi);
-  // static late final MediaDatasource _instance;
-  //
-  // MediaDatasource._internal(this._remoteApi, this.value);
-  //
-  // factory MediaDatasource() => _instance as MediaDatasource<T>;
-  //
-  // static Future init() async {
-  //   _instance = MediaDatasource._internal(RemoteApi());
-  // }
 
   @override
   Future<MediaResponse> getMediaByID(String id) async {
@@ -57,9 +50,9 @@ class MediaDatasource extends BaseMediaDatasource {
 
   @override
   Future<List<MediaListResponse>> getMediaOfGenres(String listPath,
-      List<String> genres, {int page = 1}) async {
+      List<int> genres, {int page = 1}) async {
 
-    final ids = genres.map((e) => AppFunctions.getGenreIDFromString(e)).toList();
+    final ids = genres;
 
     final paths = List.filled(ids.length, listPath);
 
@@ -98,35 +91,23 @@ class MediaDatasource extends BaseMediaDatasource {
     return VideosResponse(responseData, status: response.statusCode);
   }
 
+  @override
+  Future<SearchResponse> getSearchedMedia(String path,String searchText) async {
+    final query = "query=$searchText";
+    final response = await _remoteApi.get(path,query: query);
+    final data = List<Map<String,dynamic>>.from(jsonDecode(response.body)["results"]);
+    return SearchResponse(data, status: response.statusCode);
+  }
+
+  @override
+  Future<PersonResponse> getPersonDetails(int id) async {
+    final response = await _remoteApi.get(Paths.personDetailsPath(id),
+        query: Paths.personDetailsQuery);
+
+    final result = jsonDecode(response.body);
+    return PersonResponse(result, status: response.statusCode);
+  }
+
 
 }
 
-//
-// class MovieDatasource extends MediaDatasource{
-//
-//   static late final MovieDatasource _instance;
-//
-//   MovieDatasource._internal(super.remoteApi, super.value);
-//
-//   factory MovieDatasource() => _instance;
-//
-//   static Future init() async {
-//     _instance = MovieDatasource._internal(RemoteApi(), MoviesPaths());
-//   }
-//
-// }
-//
-//
-// class TVShowDatasource extends MediaDatasource{
-//
-//   static late final TVShowDatasource _instance;
-//
-//   TVShowDatasource._internal(super.remoteApi, super.value);
-//
-//   factory TVShowDatasource() => _instance;
-//
-//   static Future init() async {
-//     _instance = TVShowDatasource._internal(RemoteApi(), TVShowPaths());
-//   }
-//
-// }

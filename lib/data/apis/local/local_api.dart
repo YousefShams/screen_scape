@@ -15,6 +15,7 @@ class LocalApi {
   static Future init() async {
     await Hive.initFlutter();
     databases[AppDatabasesKeys.settingsDatabase] = await Hive.openBox(AppDatabasesKeys.settingsDatabase);
+    databases[AppDatabasesKeys.watchlistDatabase] = await Hive.openBox(AppDatabasesKeys.watchlistDatabase);
   }
 
   dynamic get(String dbName, String id) {

@@ -7,4 +7,7 @@ class MoviesPaths implements Paths {
   @override
   String get basePath => AppConstants.moviePath;
 
+  @override
+  String get topPath => Paths.nowPlayingPath;
+
 }

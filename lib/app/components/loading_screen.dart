@@ -10,10 +10,12 @@ class LoadingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Theme.of(context).scaffoldBackgroundColor,
-      child: const Padding(
-        padding: EdgeInsets.all(AppPadding.pagePadding),
+      child: Padding(
+        padding: const EdgeInsets.all(AppPadding.pagePadding),
         child: Center(
-          child: CircularProgressIndicator(),
+          child: CircularProgressIndicator(
+            color: Theme.of(context).indicatorColor,
+          ),
         ),
       ),
     );
