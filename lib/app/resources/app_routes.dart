@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:screen_scape/presentation/genre_movies/view/genre_movies_view.dart';
+import 'package:screen_scape/presentation/movies_list/view/movies_list_view.dart';
 import 'package:screen_scape/presentation/home/view/home_view.dart';
 import 'package:screen_scape/presentation/movie_details/view/movie_details_view.dart';
+import 'package:screen_scape/presentation/person/view/person_view.dart';
+import 'package:screen_scape/presentation/search/view/search_view.dart';
+import 'package:screen_scape/presentation/watchlist/view/watchlist_view.dart';
 import '../../presentation/onboarding/view/onboarding_view.dart';
 import '../../presentation/splash/view/splash_view.dart';
 import '../transition/page_transition.dart';
@@ -12,7 +15,13 @@ class AppRoutes {
   static const onboardingRoute = "/onboarding";
   static const homeRoute = "/home";
   static const movieDetailsRoute = "/movie-details";
-  static const genreMoviesRoute = "/genre-movies";
+  static const moviesListRoute = "/movies-list";
+  static const searchRoute = "/search";
+  static const watchlistRoute = "/watch-list";
+  static const personRoute = "/person";
+
+
+
 
 
 
@@ -22,7 +31,10 @@ class AppRoutes {
     onboardingRoute : const OnboardingScreen(),
     homeRoute: const HomeScreen(),
     movieDetailsRoute : const MovieDetailsScreen(),
-    genreMoviesRoute : const GenreMovieScreen()
+    moviesListRoute : const MoviesListScreen(),
+    searchRoute : const SearchScreen(),
+    watchlistRoute: const WatchlistScreen(),
+    personRoute : const PersonScreen()
   };
 
   static Widget getScreenFromRoute(String? route) {

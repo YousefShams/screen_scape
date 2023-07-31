@@ -14,10 +14,11 @@ class TVShow extends Media {
 
   TVShow(super.name, super.imgPath, super.overview, super.rating,
       super.rateCount, super.genres, super.id, super.genreIds,
-      super.popularity, super.releaseDate, this.runtimes, this.seasons);
+      super.popularity, super.releaseDate, super.type, this.runtimes, this.seasons);
 
 
   factory TVShow.fromJson(Map<String, dynamic> json) => _$TVShowFromJson(json);
+  @override
   Map<String, dynamic> toJson() => _$TVShowToJson(this);
 
 

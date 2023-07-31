@@ -16,7 +16,7 @@ class AppColors {
   static final lightPrimaryColor = Colors.indigoAccent[300];
   static final topRatedShadow = Colors.orange.withOpacity(0.3);
   static final appGenresColors = [Colors.white, Colors.deepPurple, Colors.red,
-    Colors.indigoAccent, Colors.greenAccent, Colors.pinkAccent];
+    Colors.indigoAccent, Colors.greenAccent, Colors.amber,  Colors.pinkAccent];
 
 
   static Color getRandomColor() {

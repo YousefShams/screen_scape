@@ -13,4 +13,8 @@ class MediaMember {
 
   const MediaMember(this.id, this.name,
       this.imagePath, this.popularity);
+
+  factory MediaMember.fromJson(json) {
+    return MediaMember(json["id"], json["name"], json["profile_path"], json["popularity"]);
+  }
 }

@@ -80,7 +80,7 @@ class AppThemes {
             filled: true,
             fillColor: Colors.blueGrey[300]?.withOpacity(0.9),
             contentPadding: const EdgeInsets.all(5),
-            hintStyle: AppFonts.getRegularStyle(color: Colors.blueGrey[900]!),
+            hintStyle: AppFonts.getRegularStyle(size: AppFonts.smallerFontSize, color: Colors.blueGrey[900]!),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(20),
               borderSide: const BorderSide(color: Colors.transparent, width: 2.0),

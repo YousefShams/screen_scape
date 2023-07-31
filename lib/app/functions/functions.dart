@@ -5,6 +5,12 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:palette_generator/palette_generator.dart';
 import 'package:screen_scape/app/constants/constants.dart';
 
+import '../../data/mapper/mapper.dart';
+import '../../data/paths/current_path.dart';
+import '../../data/paths/movie_paths.dart';
+import '../../data/paths/tv_show_paths.dart';
+import '../resources/app_routes.dart';
+
 class AppFunctions {
 
   static void showToastMessage(text,{isError = true, isInfo = false, isSuccess=false, long = true}) {
@@ -24,7 +30,7 @@ class AppFunctions {
   }
 
   static String getNetworkImagePath(String? imgPath) {
-    if(imgPath==null) "https://www.kvitkov.cz/wp-content/uploads/2020/10/image-placeholder.png";
+    if(imgPath==null) return "https://i0.wp.com/port2flavors.com/wp-content/uploads/2022/07/placeholder-614.png?fit=1200%2C800&ssl=1";
     return "${AppConstants.imageBaseUrl}$imgPath";
   }
 
@@ -37,6 +43,36 @@ class AppFunctions {
     return genresIDs[index];
   }
 
+  static void updateCurrent(int newIndex, int prevIndex, context) {
+    if(newIndex==1) {
+      CurrentEntity.updateCurrentEntity(TVShowPaths(), TVShowMapper());
+    }
+    else if(newIndex==0) {
+      CurrentEntity.updateCurrentEntity(MoviesPaths(), MovieMapper());
+    }
+  }
+
+  static void navigate(int newIndex, int prevIndex, context) {
+    if(prevIndex!=newIndex) {
+      if(newIndex==2) {
+        Navigator.pushReplacementNamed(context, AppRoutes.searchRoute);
+      }
+      else if(newIndex==3) {
+        Navigator.pushReplacementNamed(context, AppRoutes.watchlistRoute);
+
+      }
+      else {
+        Navigator.pushReplacementNamed(context, AppRoutes.homeRoute);
+      }
+    }
+  }
+
+  static String get topPathTitle {
+    final path = CurrentEntity.getCurrentEntityPath().topPath;
+    final title = path.substring(1).split("_").map(
+            (word) => capitalizeText(word)).join(" ");
+    return title;
+  }
 
   static Future<Image> compressImage(Uint8List image, int qualityPercentage, String name) async {
 

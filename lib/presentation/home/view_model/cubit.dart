@@ -25,9 +25,9 @@ class HomeCubit extends Cubit<HomeState> {
   List<Media> nowPlayingMedia = [];
   List<Media> topRatedMedia = [];
   List<List<Media>> genresMedia = [];
-  List<Media> genresPopularMedia = [];
   List<Color> nowPlayingColors = [];
   static const viewportFraction = 0.5;
+  int topRatedPage = 1;
   final pageController = PageController(viewportFraction: viewportFraction);
   double currentMediaIndex = 0;
   late int currentIndex;
@@ -37,14 +37,13 @@ class HomeCubit extends Cubit<HomeState> {
   //EVENTS
   void getMediaLists() async {
     currentIndex = paths is MoviesPaths ? 0 : 1;
-    final nowPlayingMoviesPage = await _getMediaList("${paths.basePath}${Paths.popularPath}");
+    final nowPlayingMoviesPage = await _getMediaList("${paths.basePath}${paths.topPath}");
     nowPlayingMedia.addAll(List<Media>.from(nowPlayingMoviesPage));
     nowPlayingMedia.sort((a,b)=> b.releaseDate.getDateTime().millisecondsSinceEpoch
         .compareTo(a.releaseDate.getDateTime().millisecondsSinceEpoch));
     nowPlayingColors = getColors(nowPlayingMedia.length);
     topRatedMedia = List<Media>.from(await _getMediaList("${paths.basePath}${Paths.topRatedPath}"));
     genresMedia = List<List<Media>>.from(await _getMediaOfGenres());
-    genresPopularMedia = genresMedia.map((e) => e.first).toList();
   }
 
   Future<List<Media>> _getMediaList(String listPath, {int page = 1}) async {
@@ -78,17 +77,18 @@ class HomeCubit extends Cubit<HomeState> {
     return mediaLists;
   }
 
-  void onBottomNavChange(int index, context) {
-    if(index==1 && currentIndex==0) {
-      CurrentEntity.updateCurrentEntity(TVShowPaths(), TVShowMapper());
-    }
-    else if(index==0 && currentIndex==1) {
-      CurrentEntity.updateCurrentEntity(MoviesPaths(), MovieMapper());
-    }
+  Future showMoreTopRated() async {
+    try {
+      emit(HomeLoadingState());
+      final results = await _getMediaList("${paths.basePath}"
+          "${Paths.topRatedPath}", page: topRatedPage+1);
+      topRatedMedia.addAll(results);
+      emit(HomeSuccessState());
 
-    if(currentIndex!=index) {
-      currentIndex = index;
-      Navigator.pushReplacementNamed(context, AppRoutes.homeRoute);
+    }
+    catch(e) {
+      debugPrint(e.toString());
+      emit(HomeErrorState(e.toString()));
     }
   }
 

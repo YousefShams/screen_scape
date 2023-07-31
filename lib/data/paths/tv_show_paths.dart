@@ -5,4 +5,7 @@ class TVShowPaths implements Paths {
 
   @override
   String get basePath => AppConstants.tvPath;
+
+  @override
+  String get topPath => Paths.popularPath;
 }

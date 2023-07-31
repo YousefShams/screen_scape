@@ -17,6 +17,7 @@ TVShow _$TVShowFromJson(Map<String, dynamic> json) => TVShow(
       (json['genre_ids'] as List<dynamic>?)?.map((e) => e as int).toList(),
       (json['popularity'] as num).toDouble(),
       json['first_air_date'] as String,
+      json["type"] ?? (json['name']!=null ? 1 : 0),
       (json['episode_run_time'] as List<dynamic>?)
           ?.map((e) => e as int)
           .toList(),
@@ -33,7 +34,8 @@ Map<String, dynamic> _$TVShowToJson(TVShow instance) => <String, dynamic>{
       'genres': instance.genres,
       'genre_ids': instance.genreIds,
       'popularity': instance.popularity,
-      'releaseDate': instance.releaseDate,
+      'release_date': instance.releaseDate,
+      'type': instance.type,
       'episode_run_time': instance.runtimes,
       'seasons': instance.seasons,
     };

@@ -1,7 +1,6 @@
 // ignore_for_file: file_names
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:screen_scape/app/resources/app_colors.dart';
 import 'package:screen_scape/app/resources/app_values.dart';
 import 'package:screen_scape/domain/models/media_video.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
@@ -21,7 +20,7 @@ class _MediaDetailsVideoState extends State<MediaDetailsVideo> {
   @override
   Widget build(BuildContext context) {
     const p = AppPadding.pagePadding;
-
+    const aspectRatio = 16/9;
     return Padding(
       padding: const EdgeInsets.only(left: p),
       child: ClipRRect(
@@ -33,8 +32,8 @@ class _MediaDetailsVideoState extends State<MediaDetailsVideo> {
           },
             player: YoutubePlayer(
               controller: vidController,
-              aspectRatio: 16/9,
-              width: 16/9*170,
+              aspectRatio: aspectRatio,
+              width: aspectRatio*170,
               liveUIColor: Theme.of(context).primaryColor,
               showVideoProgressIndicator: true,
               onEnded: (_) { vidController.seekTo(const Duration(seconds: 0)); },

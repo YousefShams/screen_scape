@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:screen_scape/app/resources/app_fonts.dart';
 import 'package:screen_scape/app/resources/app_values.dart';
 
 
@@ -22,13 +23,14 @@ class MovieDetailsInfo extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.only(bottom: 2.0),
-            child: Icon(icon, size: 20,),
+            child: Icon(icon, size: 17.5,),
           ),
           const SizedBox(width: 5),
           Text(
             info,
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.labelLarge?.copyWith(
+              fontSize: AppFonts.smallerFontSize,
               color :Theme.of(context).textTheme.labelMedium?.color,
               leadingDistribution: TextLeadingDistribution.proportional
             ),

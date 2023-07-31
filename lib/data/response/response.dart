@@ -46,3 +46,13 @@ class VideosResponse extends BaseResponse {
   const VideosResponse(this.data, {required int status}) : super(status);
 }
 
+class SearchResponse extends BaseResponse {
+  final List<Map<String,dynamic>> data;
+  const SearchResponse(this.data, {required int status}) : super(status);
+}
+
+class PersonResponse extends BaseResponse {
+  final Map<String,dynamic> data;
+  const PersonResponse(this.data, {required int status}) : super(status);
+}
+
