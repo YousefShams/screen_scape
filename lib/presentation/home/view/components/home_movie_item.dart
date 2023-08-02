@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:screen_scape/app/components/network_image.dart';
 import 'package:screen_scape/app/resources/app_fonts.dart';
 import 'package:screen_scape/app/resources/app_values.dart';
 import 'package:screen_scape/domain/models/media.dart';
-import '../../../../app/functions/functions.dart';
 import '../../../../app/resources/app_colors.dart';
 import '../../../../app/resources/app_routes.dart';
 
@@ -29,7 +29,7 @@ class HomeMovieItem extends StatelessWidget {
                     image: DecorationImage(
                       alignment: Alignment.topCenter,
                       fit: BoxFit.cover,
-                      image: NetworkImage(AppFunctions.getNetworkImagePath(movie.imgPath))
+                      image: defaultNetworkImage(movie.imgPath).image
                     ),
                     boxShadow: [
                       BoxShadow(color: AppColors.topRatedShadow,

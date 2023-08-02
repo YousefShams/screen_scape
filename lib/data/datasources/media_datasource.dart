@@ -1,5 +1,6 @@
 import 'dart:convert';
-import 'package:screen_scape/app/functions/functions.dart';
+import 'package:screen_scape/app/resources/app_databases_keys.dart';
+import 'package:screen_scape/data/apis/local/local_api.dart';
 import 'package:screen_scape/data/paths/paths.dart';
 import 'package:screen_scape/data/response/response.dart';
 import '../apis/remote/remote_api.dart';
@@ -20,7 +21,7 @@ abstract class BaseMediaDatasource {
 
   Future<VideosResponse> getMediaVideos(String path);
 
-  Future<SearchResponse> getSearchedMedia(String path, String searchText);
+  Future<SearchResponse> getSearchedMedia(String path, String searchText, int page);
 
   Future<PersonResponse> getPersonDetails(int id);
 
@@ -39,8 +40,12 @@ class MediaDatasource extends BaseMediaDatasource {
 
   @override
   Future<MediaListResponse> getMediaList(String listPath, {int page = 1}) async {
+    final region = await LocalApi().get(AppDatabasesKeys.settingsDatabase, AppDatabasesKeys.iso);
+    String regionQuery = "&region=$region";
+    if(!listPath.contains("playing")) regionQuery = "";
+
     final result = await _remoteApi.get(listPath,
-        query: "&page=$page");
+        query: "&page=$page$regionQuery");
 
     final data = List<Map<String, dynamic>>.from(
         jsonDecode(result.body)["results"]);
@@ -92,9 +97,9 @@ class MediaDatasource extends BaseMediaDatasource {
   }
 
   @override
-  Future<SearchResponse> getSearchedMedia(String path,String searchText) async {
-    final query = "query=$searchText";
-    final response = await _remoteApi.get(path,query: query);
+  Future<SearchResponse> getSearchedMedia(String path,String searchText, int page) async {
+    final query = "query=$searchText&page=$page";
+    final response = await _remoteApi.get(path,query: query,);
     final data = List<Map<String,dynamic>>.from(jsonDecode(response.body)["results"]);
     return SearchResponse(data, status: response.statusCode);
   }

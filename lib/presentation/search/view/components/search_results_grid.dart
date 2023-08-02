@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:screen_scape/app/components/error_screen.dart';
 import 'package:screen_scape/app/components/media_grid_view.dart';
 import 'package:screen_scape/app/components/page_title.dart';
-import 'package:screen_scape/app/functions/functions.dart';
 import 'package:screen_scape/app/resources/app_assets.dart';
 import 'package:screen_scape/app/resources/app_strings.dart';
 import 'package:screen_scape/domain/models/search_results.dart';
 import 'package:screen_scape/presentation/search/view/components/search_persons.dart';
-
 import '../../../../app/components/info_screen.dart';
-import '../../../../domain/models/media.dart';
 
 
 class SearchResultsGrid extends StatelessWidget {

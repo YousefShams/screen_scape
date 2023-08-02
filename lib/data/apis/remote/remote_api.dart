@@ -14,7 +14,7 @@ class RemoteApi {
 
   factory RemoteApi() => _instance;
 
-  final timeoutDuration = const Duration(seconds: 30);
+  final timeoutDuration = const Duration(seconds: 20);
 
   final headers = {
     "Accept" : "application/json",

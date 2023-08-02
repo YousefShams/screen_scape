@@ -11,7 +11,7 @@ class MovieDetailsGenres extends StatelessWidget {
     const p = AppPadding.pagePadding;
     return Center(
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(p,0,p,p),
+        padding: const EdgeInsets.fromLTRB(p,0,p,p*2),
         child: Text(genres.join(", "),
             style: Theme.of(context).textTheme.labelMedium?.
             copyWith(fontSize: AppFonts.smallerFontSize),

@@ -34,7 +34,7 @@ class MoviesListCubit extends Cubit<MoviesListState> {
 
       final maxDistance = controller.position.maxScrollExtent- controller.position.minScrollExtent;
       final currentDistance = controller.position.maxScrollExtent - controller.position.pixels;
-      print("${currentDistance/maxDistance}  ,  ${DateTime.now().difference(lastGet).inSeconds}");
+
       if(currentDistance/maxDistance < 0.4 &&
           DateTime.now().difference(lastGet).inSeconds > 2) {
         lastGet = DateTime.now();
@@ -46,7 +46,6 @@ class MoviesListCubit extends Cubit<MoviesListState> {
         }
 
       }
-      print("media length : ${media.length}");
     });
   }
 
@@ -66,7 +65,6 @@ class MoviesListCubit extends Cubit<MoviesListState> {
 
   Future _getMediaOfGenre(String listPath, int id,  {int page = 1}) async {
     emit(MoviesListLoading());
-    List<Media> mediaResult = [];
     final result = await mediaRepo.getMediaOfGenres(listPath, [id], page: page);
     result.fold((failure) {
       emit(MoviesListError(failure.message));

@@ -3,11 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:screen_scape/app/constants/constants.dart';
 import 'package:screen_scape/app/extensions/screen_ext.dart';
 import 'package:screen_scape/app/resources/app_colors.dart';
-import 'package:screen_scape/app/resources/app_routes.dart';
-import 'package:screen_scape/data/mapper/mapper.dart';
-import 'package:screen_scape/data/paths/current_path.dart';
+import 'package:screen_scape/data/apis/local/local_api.dart';
 import 'package:screen_scape/data/paths/paths.dart';
-import 'package:screen_scape/data/paths/tv_show_paths.dart';
 import 'package:screen_scape/data/repositories/media_repository.dart';
 import 'package:screen_scape/presentation/home/view_model/states.dart';
 import '../../../data/paths/movie_paths.dart';
@@ -16,8 +13,9 @@ import '../../../domain/models/media.dart';
 
 class HomeCubit extends Cubit<HomeState> {
   final MediaRepository mediaRepo;
+  final LocalApi localApi;
   final Paths paths;
-  HomeCubit(this.mediaRepo, this.paths) : super(HomeInitialState());
+  HomeCubit(this.mediaRepo, this.paths, this.localApi) : super(HomeInitialState());
 
   static HomeCubit get(context) => BlocProvider.of(context);
 
@@ -97,7 +95,7 @@ class HomeCubit extends Cubit<HomeState> {
   }
 
   void carouselPositionListen(BuildContext context) {
-    final itemWidth = context.getWidth() * viewportFraction;
+    final itemWidth = (context.getWidth())*viewportFraction;
     pageController.addListener(() {
       currentMediaIndex = ((pageController.offset/itemWidth)-0.2).ceil().toDouble();
       emit(HomeUpdateState());

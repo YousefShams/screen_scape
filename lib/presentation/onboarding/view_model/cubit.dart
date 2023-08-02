@@ -2,15 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:screen_scape/presentation/onboarding/view_model/states.dart';
 import '../../../app/resources/app_assets.dart';
-import '../../../app/resources/app_databases_keys.dart';
 import '../../../app/resources/app_routes.dart';
 import '../../../app/resources/app_strings.dart';
-import '../../../../data/apis/local/local_api.dart';
 import '../../../domain/models/onboarding_model.dart';
 
 class OnboardingCubit extends Cubit<OnboardingState> {
-  final LocalApi localApi;
-  OnboardingCubit(this.localApi) : super(OnboardingInitialState());
+  OnboardingCubit() : super(OnboardingInitialState());
 
   static OnboardingCubit get(context) => BlocProvider.of(context);
 
@@ -28,8 +25,7 @@ class OnboardingCubit extends Cubit<OnboardingState> {
   //EVENTS
   void increment(context) {
     if(currentIndex == onboardingData.length-1) {
-      localApi.save(AppDatabasesKeys.settingsDatabase, {AppDatabasesKeys.onboardingDone: true});
-      Navigator.pushNamed(context, AppRoutes.homeRoute);
+      Navigator.pushNamed(context, AppRoutes.countryRoute);
     }
     else {
       currentIndex = (currentIndex+1)%onboardingData.length;

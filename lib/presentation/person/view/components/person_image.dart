@@ -1,35 +1,36 @@
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
-import 'package:screen_scape/app/functions/functions.dart';
-import 'package:screen_scape/app/resources/app_assets.dart';
+import 'package:screen_scape/app/components/network_image.dart';
 import 'package:screen_scape/app/resources/app_values.dart';
-
 import '../../../../app/resources/app_colors.dart';
 
 class PersonImage extends StatelessWidget {
   final String? personImagePath;
   final double size;
-  const PersonImage({Key? key, required this.personImagePath, this.size = 50}) : super(key: key);
+  final bool highTopPadding;
+  final bool noPadding;
+  const PersonImage({Key? key, required this.personImagePath, this.size = 50,
+    this.highTopPadding = true, this.noPadding = false }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: AppPadding.pagePadding),
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          CircleAvatar(
-            radius: size,
-            backgroundColor: Colors.blueGrey,
-            backgroundImage: (personImagePath==null) ?
-            null : Image.network(
-              AppFunctions.getNetworkImagePath(personImagePath!),
-              fit: BoxFit.contain, isAntiAlias: true,
-            ).image,
-            child: (personImagePath==null) ? Icon(Icons.person, size: size*7/5,
-              color: AppColors.scaffoldDarkBackground,):null,
-          )
-        ],
+    return Center(
+      child: Padding(
+        padding: (noPadding) ? EdgeInsets.zero :
+        EdgeInsets.only(top: (highTopPadding)? kToolbarHeight : AppPadding.pagePadding),
+
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            CircleAvatar(
+              radius: size,
+              backgroundColor: Colors.blueGrey,
+              backgroundImage: (personImagePath==null) ?
+              null : defaultNetworkImage(personImagePath).image,
+              child: (personImagePath==null) ? Icon(Icons.person, size: size*7/5,
+                color: AppColors.scaffoldDarkBackground,):null,
+            )
+          ],
+        ),
       ),
     );
   }

@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:screen_scape/app/components/network_image.dart';
 import 'package:screen_scape/app/extensions/screen_ext.dart';
 import 'package:screen_scape/app/resources/app_colors.dart';
 import 'package:screen_scape/app/resources/app_styles.dart';
@@ -24,9 +25,8 @@ class MovieDetailsImage extends StatelessWidget {
           width: double.maxFinite,
           height: context.getHeight()*heightFactor,
           decoration: BoxDecoration(
-            image: DecorationImage(
-              fit: BoxFit.cover,
-              image: NetworkImage(imgPath),
+            image: DecorationImage(fit: BoxFit.cover,
+              image: defaultNetworkImage(imgPath).image,
             ),
             borderRadius: borderRadius,
             //boxShadow: [BoxShadow(color: imageColor, blurRadius: 30, offset: const Offset(0, 20))]
@@ -63,29 +63,3 @@ class MovieDetailsImage extends StatelessWidget {
   }
 }
 
-
-/*
-
-Container(
-          alignment: Alignment.bottomCenter,
-          width: double.maxFinite,
-          height: context.getHeight()*0.55,
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                fit: BoxFit.cover,
-                image: NetworkImage(imgPath),
-              ),
-              borderRadius: borderRadius,
-              boxShadow: [BoxShadow(color: imageColor, blurRadius: 30, offset: const Offset(0, 20))]
-          ),
-          child: Container(
-            width: double.maxFinite,
-            height: context.getHeight()*0.55,
-            decoration: BoxDecoration(
-              borderRadius: borderRadius,
-              gradient: AppStyles.lighterImageGradient
-            ),
-          ),
-        ),
-
-*/

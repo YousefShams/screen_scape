@@ -1,10 +1,13 @@
+import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:http/http.dart';
 import 'package:palette_generator/palette_generator.dart';
+import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:screen_scape/app/constants/constants.dart';
-
 import '../../data/mapper/mapper.dart';
 import '../../data/paths/current_path.dart';
 import '../../data/paths/movie_paths.dart';
@@ -31,7 +34,37 @@ class AppFunctions {
 
   static String getNetworkImagePath(String? imgPath) {
     if(imgPath==null) return "https://i0.wp.com/port2flavors.com/wp-content/uploads/2022/07/placeholder-614.png?fit=1200%2C800&ssl=1";
-    return "${AppConstants.imageBaseUrl}$imgPath";
+    if(imgPath.contains("http")) {
+      return imgPath;
+    }
+    else {
+      return "${AppConstants.imageBaseUrl}$imgPath";
+    }
+  }
+
+  static Future<void> downloadNetworkImage(String path) async {
+    try {
+      final url = getNetworkImagePath(path);
+      final response = await get(Uri.parse(url));
+
+      // Get the image name
+      final imageName = basename(url);
+      // Get the document directory path
+      final appDir = await getApplicationDocumentsDirectory();
+
+      // This is the saved image path
+      // You can use it to display the saved image later
+      final localPath = join(appDir.path, imageName);
+
+      // Downloading
+      final imageFile = File(localPath);
+      await imageFile.writeAsBytes(response.bodyBytes);
+      showToastMessage("Downloaded successfully!", isSuccess: true);
+    }
+
+    catch(e) {
+      showToastMessage("Some error occurred, try again later.", isSuccess: true);
+    }
   }
 
   static int getGenreIDFromString(String genre) {
@@ -94,6 +127,34 @@ class AppFunctions {
 
   static String capitalizeText(String text) {
     return "${text[0].toUpperCase()}${text.substring(1)}";
+  }
+
+  static List<Widget> getStars(double rating) {
+    double starsCount = rating/2;
+    double totalCount = 5;
+    List<Icon> stars = [];
+    while(totalCount > 0) {
+      if(starsCount >= 1) {
+        stars.add(const Icon(Icons.star_rounded, color: Colors.orange));
+      }
+      else if(starsCount > 0 && starsCount < 1) {
+        if(starsCount >= 0.7) {
+          stars.add(const Icon(Icons.star_rounded, color: Colors.orange));
+        }
+        else if (starsCount < 0.3) {
+          stars.add(const Icon(Icons.star_border_rounded, color: Colors.orange));
+        }
+        else {
+          stars.add(const Icon(Icons.star_half_rounded, color: Colors.orange));
+        }
+      }
+      else {
+        stars.add(const Icon(Icons.star_border_rounded, color: Colors.orange));
+      }
+      if(starsCount > 0) starsCount--;
+      totalCount--;
+    }
+    return stars;
   }
 
   static String getHourString(int hour, int mins) {

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:screen_scape/app/components/error_screen.dart';
 import 'package:screen_scape/app/components/loading_screen.dart';
+import 'package:screen_scape/data/apis/local/local_api.dart';
 import 'package:screen_scape/data/apis/remote/remote_api.dart';
 import 'package:screen_scape/data/datasources/media_datasource.dart';
 import 'package:screen_scape/data/paths/current_path.dart';
@@ -20,7 +21,7 @@ class HomeCubitWidget extends StatelessWidget {
     final ds = MediaDatasource(RemoteApi());
     final repo = MediaRepository(ds, CurrentEntity.getCurrentEntityMapper());
     return BlocProvider(
-      create: (_) => HomeCubit(repo, CurrentEntity.getCurrentEntityPath())
+      create: (_) => HomeCubit(repo, CurrentEntity.getCurrentEntityPath(), LocalApi())
         ..getMediaLists()..carouselPositionListen(context),
       child: BlocBuilder<HomeCubit,HomeState>(
           builder: (context, state) {

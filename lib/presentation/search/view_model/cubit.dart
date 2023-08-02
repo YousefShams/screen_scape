@@ -4,7 +4,6 @@ import 'package:screen_scape/domain/models/search_results.dart';
 import 'package:screen_scape/presentation/search/view_model/states.dart';
 
 import '../../../data/repositories/media_repository.dart';
-import '../../../domain/models/media.dart';
 
 
 class SearchCubit extends Cubit<SearchState> {
@@ -14,23 +13,31 @@ class SearchCubit extends Cubit<SearchState> {
   static SearchCubit get(context) => BlocProvider.of(context);
 
   //VARIABLES
-  SearchResults results = const SearchResults([], []);
+  SearchResults results = SearchResults([], []);
   final controller = TextEditingController();
 
   //EVENTS
   Future search() async {
     final searchText = controller.text.toLowerCase().trim();
+    results.clear();
     if(searchText.isNotEmpty) {
-      emit(SearchLoading());
-      final searchResults = await mediaRepo.getSearchedMedia(searchText);
+      await getSearchPages(3, searchText);
+    }
+  }
+
+  Future getSearchPages(int pages, String searchText) async {
+    emit(SearchLoading());
+    for(int pageNumber = 1 ; pageNumber <= 3 ; pageNumber++) {
+      final searchResults = await mediaRepo.getSearchedMedia(searchText, pageNumber);
       searchResults.fold(
-        (failure){
-          emit(SearchError(failure.message));
-        },
-        (searchResults) {
-           results = searchResults;
-           emit(SearchSuccess());
-        }
+          (failure){
+            emit(SearchError(failure.message));
+          },
+
+          (searchResults) {
+            results.update(searchResults);
+            emit(SearchSuccess());
+          }
       );
     }
   }
