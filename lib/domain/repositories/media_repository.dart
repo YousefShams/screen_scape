@@ -20,7 +20,7 @@ abstract class BaseMediaRepository {
 
   Future<Either<Failure, List<MediaVideo>>> getMediaVideo(String path);
 
-  Future<Either<Failure, SearchResults>> getSearchedMedia(String searchText);
+  Future<Either<Failure, SearchResults>> getSearchedMedia(String searchText, int page);
 
   Future<Either<Failure, Person>> getPersonDetails(int id);
 

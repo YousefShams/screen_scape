@@ -106,7 +106,6 @@ class MediaRepository extends BaseMediaRepository {
     try {
 
       final responses = await _mediaDS.getMediaOfGenres(listPath, genres, page: page);
-      print(responses.map((e) => mapper.getObjectList(e.data)).toList().first);
       final errorResponses = responses.where((e) => ErrorHandler(e.statusCode).hasError).toList();
 
       if(errorResponses.isNotEmpty) {
@@ -180,11 +179,11 @@ class MediaRepository extends BaseMediaRepository {
   }
 
   @override
-  Future<Either<Failure, SearchResults>> getSearchedMedia(String searchText) async {
+  Future<Either<Failure, SearchResults>> getSearchedMedia(String searchText, int page) async {
 
     try {
       final path = Paths.searchPath;
-      final response = await _mediaDS.getSearchedMedia(path, searchText);
+      final response = await _mediaDS.getSearchedMedia(path, searchText, page);
       final errorHandler = ErrorHandler(response.statusCode);
 
       if(errorHandler.hasError) {

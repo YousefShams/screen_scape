@@ -11,15 +11,19 @@ class MediaDetailsVideos extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: AppPadding.pagePadding),
-      child: SizedBox(
-        width: double.maxFinite, height: 170,
-        child: ListView.builder(
-          scrollDirection: Axis.horizontal,
-          physics: const BouncingScrollPhysics(),
-          itemCount: videos.length,
-          itemBuilder: (context, index) => MediaDetailsVideo(video: videos[index]),
+    return Visibility(
+      visible: videos.isNotEmpty,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: AppPadding.pagePadding),
+        child: SizedBox(
+          width: double.maxFinite, height: 170,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            physics: const BouncingScrollPhysics(),
+            itemCount: videos.length,
+            itemBuilder: (context, index) =>
+                MediaDetailsVideo(video: videos[index], index: index,),
+          ),
         ),
       ),
     );

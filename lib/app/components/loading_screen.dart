@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../resources/app_values.dart';
+import 'package:screen_scape/app/resources/app_colors.dart';
 
 
 class LoadingScreen extends StatelessWidget {
@@ -10,13 +10,8 @@ class LoadingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Theme.of(context).scaffoldBackgroundColor,
-      child: Padding(
-        padding: const EdgeInsets.all(AppPadding.pagePadding),
-        child: Center(
-          child: CircularProgressIndicator(
-            color: Theme.of(context).indicatorColor,
-          ),
-        ),
+      child: const Center(
+        child: CircularProgressIndicator(color: AppColors.primaryColor,),
       ),
     );
   }

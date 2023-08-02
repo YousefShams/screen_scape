@@ -50,6 +50,11 @@ dependencies:
   flutter_image_compress: ^2.0.4
   path_provider: ^2.0.15
   youtube_player_flutter: ^8.1.2
+  country_codes: ^2.2.0
+  path: ^1.8.3
+  geolocator: ^9.0.2
+  geocoding: ^2.1.0
+  country_code_picker: ^3.0.0
 
 dev_dependencies:
   flutter_test:
@@ -62,6 +67,12 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
+  flutter_launcher_icons: ^0.13.1
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/icon.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

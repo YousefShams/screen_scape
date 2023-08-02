@@ -69,7 +69,7 @@ class AppThemes {
         ),
         indicatorColor: AppColors.primaryColor,
         textTheme: TextTheme(
-          titleLarge: AppFonts.getBoldStyle(color: Colors.white),
+          titleLarge: AppFonts.getBoldStyle(size: AppFonts.xXLFontSize, color: Colors.white),
           titleMedium: AppFonts.getMediumStyle(size: AppFonts.mediumFontSize, color: Colors.blueGrey[50]!),
           bodyMedium: AppFonts.getRegularStyle(size: AppFonts.smallFontSize, color: Colors.white),
           bodySmall: AppFonts.getRegularStyle(color: Colors.blueGrey[300]!, size: AppFonts.tinyFontSize),

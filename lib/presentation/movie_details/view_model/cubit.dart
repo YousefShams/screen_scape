@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:screen_scape/app/components/network_image.dart';
 import 'package:screen_scape/app/functions/functions.dart';
 import 'package:screen_scape/app/resources/app_databases_keys.dart';
 import 'package:screen_scape/app/resources/app_strings.dart';
@@ -29,10 +30,11 @@ class MediaDetailsCubit extends Cubit<MediaDetailsState> {
   List<MediaVideo> trailers = [];
 
 
-  //late Color imageColor;
+  late Color imageColor;
   late MemberCredits credits;
   late String basePath;
   late bool bookmarked;
+  bool inFullScreen = false;
 
   //EVENTS
   void getMediaDetails(Media media) async {
@@ -46,7 +48,6 @@ class MediaDetailsCubit extends Cubit<MediaDetailsState> {
   Future getMediaImages(int movieId) async {
     emit(MediaDetailsLoading());
     final path = "$basePath${Paths.imagesPath(movieId)}";
-    print(path);
     final result = await mediaRepo.getMediaImages(path);
 
     result.fold((failure){
@@ -85,6 +86,7 @@ class MediaDetailsCubit extends Cubit<MediaDetailsState> {
 
   }
 
+
   List<MediaVideo> getTrailers(List<MediaVideo> videos) {
     final trailers = videos.where((e) => e.type.toLowerCase().contains("trailer")).toList();
     return trailers;
@@ -121,4 +123,14 @@ class MediaDetailsCubit extends Cubit<MediaDetailsState> {
     return MoviesPaths().basePath;
   }
 
+  Future getImageColor(Media media) async {
+    emit(MediaDetailsLoading());
+    imageColor = await AppFunctions.getImagePalette(defaultNetworkImage(media.imgPath).image);
+    emit(MediaDetailsSuccess());
+  }
+
+  void setIsInFullscreen(bool value) {
+    inFullScreen = value;
+    emit(MediaDetailsSuccess());
+  }
 }

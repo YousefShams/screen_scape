@@ -11,6 +11,8 @@ class AppAssets {
   static const search = "$imagePath/search.json";
   static const watchlist = "$imagePath/watchlist.json";
   static const profile = "$imagePath/profile.json";
+  static const bubbles = "$imagePath/bubbles.json";
+  static const loading = "$imagePath/loading.json";
 
 
 

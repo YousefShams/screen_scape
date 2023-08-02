@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:screen_scape/app/extensions/screen_ext.dart';
-import 'package:screen_scape/app/functions/functions.dart';
-import 'package:screen_scape/app/resources/app_colors.dart';
+import 'package:screen_scape/app/resources/app_fonts.dart';
 import 'package:screen_scape/app/resources/app_routes.dart';
 import 'package:screen_scape/app/resources/app_values.dart';
-import 'package:screen_scape/data/paths/paths.dart';
 import 'package:screen_scape/presentation/person/view/components/person_image.dart';
 
 class MovieCreditsItem extends StatelessWidget {
@@ -20,17 +17,22 @@ class MovieCreditsItem extends StatelessWidget {
     return GestureDetector(
       onTap: () { Navigator.pushNamed(context, AppRoutes.personRoute, arguments: id);},
       child: Container(
-        alignment: Alignment.center,
-        margin: const EdgeInsets.fromLTRB(p, p, p, p),
-        width: context.getWidth()*0.33,
+        alignment: Alignment.centerLeft,
+        margin: const EdgeInsets.fromLTRB(p, p, 0, 0),
+        width: 150,
         child: Column(
           children: [
-            PersonImage(personImagePath: imagePath),
+            PersonImage(personImagePath: imagePath, highTopPadding: false, size: 60,),
             const SizedBox(height:12),
-            Text(name, style: Theme.of(context).textTheme.labelLarge,
-              textAlign: TextAlign.center, overflow: TextOverflow.ellipsis, maxLines: 1,),
+            Text(name, style: Theme.of(context).textTheme.labelLarge?.copyWith(
+              fontSize: AppFonts.smallerFontSize
+            ),
+              textAlign: TextAlign.center, overflow: TextOverflow.ellipsis,
+              maxLines: 2,),
             const SizedBox(height: 7),
-            Text(role, style: Theme.of(context).textTheme.labelMedium, overflow: TextOverflow.ellipsis,),
+            Text(role, maxLines: 1, textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.labelMedium,
+                overflow: TextOverflow.fade),
           ],
         ),
       ),

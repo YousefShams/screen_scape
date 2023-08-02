@@ -14,7 +14,7 @@ class MovieDetailsInfo extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 3 , horizontal: 10),
       margin: const EdgeInsets.only(top: AppSpacing.verticalSpaceBetweenTitleAndText),
       decoration: BoxDecoration(
-        color: Theme.of(context).scaffoldBackgroundColor,
+        color: Theme.of(context).scaffoldBackgroundColor.withOpacity(0.7),
         borderRadius: BorderRadius.circular(20)
       ),
       child: Row(

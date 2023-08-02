@@ -11,6 +11,5 @@ class MediaCredits {
   const MediaCredits(this.cast, this.crew);
 
   factory MediaCredits.fromJson(Map<String, dynamic> json) => _$MediaCreditsFromJson(json);
-  @override
   Map<String, dynamic> toJson() => _$MediaCreditsToJson(this);
 }

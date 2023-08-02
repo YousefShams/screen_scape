@@ -23,7 +23,7 @@ class SplashViewModel {
 
   String _getInitialRoute(bool notDone) {
     if(notDone) return AppRoutes.onboardingRoute;
-    else return AppRoutes.homeRoute;
+    else return AppRoutes.countryRoute;
   }
 
   void _navigate(context, initialRoute) {

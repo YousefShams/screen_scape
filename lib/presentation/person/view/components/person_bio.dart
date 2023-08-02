@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:screen_scape/app/components/page_title.dart';
 import 'package:screen_scape/app/resources/app_colors.dart';
+import 'package:screen_scape/app/resources/app_strings.dart';
 import 'package:screen_scape/app/resources/app_values.dart';
 
 class PersonBio extends StatefulWidget {
@@ -19,15 +19,17 @@ class _PersonBioState extends State<PersonBio> {
       onTap: () { setState(() { inReadMore = !inReadMore; }); },
       child: Padding(
           padding: const EdgeInsets.all(AppPadding.pagePadding),
-          child: RichText(text: TextSpan(
-            style: Theme.of(context).textTheme.bodyMedium,
-            children: (!inReadMore) ? [
-              TextSpan(text:
-              "${widget.bio.substring(0, widget.bio.length < 200 ? widget.bio.length :200)}.."),
-              TextSpan(text: " Read more.." , style: Theme.of(context).textTheme.bodyMedium?.
+          child: (widget.bio.isEmpty) ?
+          Text(AppStrings.emptyBio,style: Theme.of(context).textTheme.bodyMedium, textAlign: TextAlign.center,) :
+          RichText(text: TextSpan(
+              style: Theme.of(context).textTheme.bodyMedium,
+              children: (!inReadMore) ? [
+                TextSpan(text:
+                "${widget.bio.substring(0, widget.bio.length < 200 ? widget.bio.length :200)}.."),
+                TextSpan(text: " Read more.." , style: Theme.of(context).textTheme.bodyMedium?.
                 copyWith(color: AppColors.primaryColor)
-              )
-            ] :  [TextSpan(text: widget.bio)]
+                )
+              ] :  [TextSpan(text: widget.bio)]
           )
           )
       ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:screen_scape/app/components/network_image.dart';
 import 'package:screen_scape/app/functions/functions.dart';
 import 'package:screen_scape/app/resources/app_values.dart';
 import 'package:screen_scape/app/transition/page_transition.dart';
@@ -30,10 +31,7 @@ class PersonProfileImages extends StatelessWidget {
                     Navigator.push(context, PageTransition(
                         MovieFullScreenImage(imagePath:imageNetworkPath)));
                     },
-                  child: Image.network(
-                    imageNetworkPath,
-                    fit: BoxFit.cover, isAntiAlias: true,
-                  ),
+                  child: defaultNetworkImage(imageNetworkPath, cover: true),
                 ),
               ),
             ),

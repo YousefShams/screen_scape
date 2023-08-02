@@ -1,7 +1,4 @@
-
 // ignore_for_file: curly_braces_in_flow_control_structures
-
-import 'package:screen_scape/app/resources/app_assets.dart';
 
 class AppStrings {
 
@@ -21,6 +18,7 @@ class AppStrings {
   static const genres = "Genres";
 
   static const emptyOverview = "We don't have an overview translated in English yet.";
+  static const emptyBio = "We don't have a biography for this person yet.";
 
   static const searchTitle = "Search";
   static const searchHint = "Search here..";
@@ -32,6 +30,15 @@ class AppStrings {
 
   static const watchlistSuccessAdd = "successfully added to your watchlist!";
   static const watchlistSuccessRemove = "successfully removed from your watchlist";
+
+  static const tryAgain = "Try Again";
+  static const locationError = "Please allow and open the location in your device settings"
+      " so we can know the"
+      " country you are in to display relevant movies to you.";
+
+  static const countryPick = "Choose your country";
+  static const countryError = "Please pick a country before proceeding";
+
 
   static String get greetingsString {
     final currentHour = DateTime.now().hour;

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:screen_scape/app/resources/app_values.dart';
 import 'package:screen_scape/presentation/home/view/components/home_movies_list.dart';
-
 import '../../../../domain/models/media.dart';
 
 

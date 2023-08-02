@@ -15,22 +15,28 @@ class HomeCarouselItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const p = AppPadding.pagePadding;
     final image = NetworkImage(AppFunctions.getNetworkImagePath(movie.imgPath));
-    return GestureDetector(
-      onTap: (){ Navigator.pushNamed(context, AppRoutes.movieDetailsRoute, arguments: movie);},
-      child: Padding(
-        padding: const EdgeInsets.only(bottom: AppPadding.pagePadding),
-        child: AnimatedScale(
-          duration: const Duration(milliseconds: 300),
-          curve: Curves.easeInOut,
-          scale: HomeCubit.get(context).getScale(index),
-          child: Container(
-            margin: const EdgeInsets.all(AppPadding.carouselItems),
-            decoration: BoxDecoration(
-                color: color,
-                image: DecorationImage(image: image, fit: BoxFit.cover, isAntiAlias: true),
-                borderRadius: BorderRadius.circular(20),
-                boxShadow: [BoxShadow(color: color.withOpacity(0.5), blurRadius: 23, offset: const Offset(0, 7))]
+    return FractionallySizedBox(
+      alignment: Alignment.bottomCenter,
+      heightFactor: 0.96,
+      child: GestureDetector(
+        onTap: (){ Navigator.pushNamed(context, AppRoutes.movieDetailsRoute, arguments: movie);},
+        child: Padding(
+          padding: const EdgeInsets.only(bottom: AppPadding.pagePadding,),
+          child: AnimatedScale(
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeInOut,
+            scale: HomeCubit.get(context).getScale(index),
+            child: Container(
+              margin: const EdgeInsets.fromLTRB(p,p/2,0,p/2),
+              decoration: BoxDecoration(
+                  color: color,
+                  image: DecorationImage(image: image, fit: BoxFit.cover, isAntiAlias: false),
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [BoxShadow(color: color.withOpacity(0.6),
+                      blurRadius: 22, offset: const Offset(0, 2))]
+              ),
             ),
           ),
         ),

@@ -6,7 +6,6 @@ import 'package:screen_scape/data/paths/current_path.dart';
 import 'package:screen_scape/data/repositories/media_repository.dart';
 import '../../../../data/apis/remote/remote_api.dart';
 import '../../../../data/datasources/media_datasource.dart';
-import '../../../../domain/models/media.dart';
 import '../../view_model/cubit.dart';
 import '../../view_model/states.dart';
 

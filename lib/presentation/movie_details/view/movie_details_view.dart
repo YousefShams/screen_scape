@@ -17,18 +17,18 @@ class MovieDetailsScreen extends StatelessWidget {
     final media = ModalRoute.of(context)!.settings.arguments as Media;
     return MovieDetailsCubitWidget(
       media: media,
-      builder: (cubit) =>
-          Scaffold(
+      builder: (cubit) => Scaffold(
             body: Stack(
               children: [
-                MovieDetailsBlur(networkImagePath:
-                AppFunctions.getNetworkImagePath(media.imgPath)),
+                MovieDetailsBlur(
+                    darkness: 0.2,
+                    networkImagePath: AppFunctions.getNetworkImagePath(media.imgPath)),
                 Column(
                   children: [
                     MovieDetailsImage(
-                      imgPath: AppFunctions.getNetworkImagePath(media.imgPath),
-                      bookmarked : cubit.bookmarked,
-                      onAdd : () { cubit.toggleOnWatchlist(media); }
+                        imgPath: AppFunctions.getNetworkImagePath(media.imgPath),
+                        bookmarked : cubit.bookmarked,
+                        onAdd : () { cubit.toggleOnWatchlist(media); }
                     ),
                     Row(
                       mainAxisSize: MainAxisSize.max,
@@ -36,7 +36,7 @@ class MovieDetailsScreen extends StatelessWidget {
                       children: [
                         MovieDetailsInfo(
                             icon: Icons.date_range_rounded,
-                            info: "${media.releaseDate.getDateTime().year}/"
+                            info: "${media.releaseDate.getDateTime().year}-"
                                 "${media.releaseDate.getDateTime().month}"
                         ),
                         const SizedBox(width: 10),
@@ -47,14 +47,14 @@ class MovieDetailsScreen extends StatelessWidget {
                   ],
                 ),
                 MovieDetailsBottom(
-                  movie: media,
-                  videos: cubit.trailers,
-                  imagesPaths: cubit.imagesPaths,
-                  credits: cubit.credits,
+                    movie: media,
+                    videos: cubit.trailers,
+                    imagesPaths: cubit.imagesPaths,
+                    credits: cubit.credits,
                 )
               ],
             ),
-          ),
+          )
     );
   }
 }

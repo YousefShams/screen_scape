@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:screen_scape/app/components/bottom_nav.dart';
 import 'package:screen_scape/app/constants/constants.dart';
@@ -18,14 +17,14 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return HomeCubitWidget(
       builder: (cubit) => Scaffold(
+        extendBodyBehindAppBar: true,
         body: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               HomeTitle(title: AppFunctions.topPathTitle),
               HomeCarousel(
-                  movies: cubit.nowPlayingMedia,
-                  colors: cubit.nowPlayingColors,
+                  movies: cubit.nowPlayingMedia, colors: cubit.nowPlayingColors,
                   pageController: cubit.pageController
               ),
               HomeCurrentNowPlaying(movies: cubit.nowPlayingMedia,

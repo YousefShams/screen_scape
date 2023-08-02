@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:screen_scape/app/functions/functions.dart';
 
 
 class MovieDetailsRating extends StatelessWidget {
@@ -11,10 +12,12 @@ class MovieDetailsRating extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Icon(Icons.star_rounded, color: Colors.orange),
+          ...AppFunctions.getStars(rating),
+          const SizedBox(width: 5),
           Text(rating.toStringAsPrecision(2), style: Theme.of(context).textTheme.labelMedium,),
 
         ],),
     );
   }
 }
+

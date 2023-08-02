@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:screen_scape/presentation/country_pick/view/country_pick_view.dart';
 import 'package:screen_scape/presentation/movies_list/view/movies_list_view.dart';
 import 'package:screen_scape/presentation/home/view/home_view.dart';
 import 'package:screen_scape/presentation/movie_details/view/movie_details_view.dart';
@@ -19,6 +20,8 @@ class AppRoutes {
   static const searchRoute = "/search";
   static const watchlistRoute = "/watch-list";
   static const personRoute = "/person";
+  static const countryRoute = "/country";
+
 
 
 
@@ -34,7 +37,8 @@ class AppRoutes {
     moviesListRoute : const MoviesListScreen(),
     searchRoute : const SearchScreen(),
     watchlistRoute: const WatchlistScreen(),
-    personRoute : const PersonScreen()
+    personRoute : const PersonScreen(),
+    countryRoute : const CountryPickScreen()
   };
 
   static Widget getScreenFromRoute(String? route) {

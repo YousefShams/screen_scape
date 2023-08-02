@@ -1,3 +1,4 @@
+import 'package:country_codes/country_codes.dart';
 import 'package:screen_scape/data/apis/local/local_api.dart';
 import 'package:screen_scape/data/apis/remote/remote_api.dart';
 
@@ -7,7 +8,5 @@ Future initApp() async {
   await dotenv.load(fileName: ".env");
   await LocalApi.init();
   await RemoteApi.init();
-  // await MoviesDatasource.init();
-  // await TVShowDatasource.init();
-  // await MoviesRepository.init();
+  await CountryCodes.init();
 }

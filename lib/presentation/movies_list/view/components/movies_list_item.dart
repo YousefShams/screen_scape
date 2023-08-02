@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../../../app/functions/functions.dart';
+import 'package:screen_scape/app/components/network_image.dart';
 import '../../../../app/resources/app_routes.dart';
 import '../../../../app/resources/app_values.dart';
 import '../../../../domain/models/media.dart';
@@ -13,7 +12,6 @@ class MoviesListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const p = AppPadding.pagePadding;
-    final image = NetworkImage(AppFunctions.getNetworkImagePath(movie.imgPath));
     return GestureDetector(
       onTap: (){
         Navigator.pushNamed(context, AppRoutes.movieDetailsRoute,
@@ -31,7 +29,7 @@ class MoviesListItem extends StatelessWidget {
               child: Container(
                 decoration: BoxDecoration(
                     color: Colors.transparent,
-                    image: DecorationImage(image: image, fit: BoxFit.cover, isAntiAlias: true),
+                    image: DecorationImage(image: defaultNetworkImage(movie.imgPath).image, fit: BoxFit.cover, isAntiAlias: true),
                     borderRadius: BorderRadius.circular(20),
                     boxShadow: [BoxShadow(color: Colors.transparent.withOpacity(0.5), blurRadius: 23, offset: const Offset(0, 7))]
                 ),

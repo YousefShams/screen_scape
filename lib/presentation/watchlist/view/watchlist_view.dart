@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:screen_scape/app/components/blur_animated_background.dart';
 import 'package:screen_scape/app/components/page_title.dart';
 import 'package:screen_scape/app/resources/app_strings.dart';
 import '../../../app/components/bottom_nav.dart';
@@ -14,10 +15,10 @@ class WatchlistScreen extends StatelessWidget {
     return WatchlistCubitWidget(
       builder: (cubit) => Scaffold(
         bottomNavigationBar: const DefaultBottomNavBar(currentIndex: 3),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        body: Stack(
           children: [
-            const PageTitle(title: AppStrings.watchlistTitle),
+            const BlurAnimation(),
+            const PageTitle(title: AppStrings.watchlistTitle, paddingFactor: 1),
             WatchlistGrid(results: cubit.media, onAfterPopping: cubit.getLocalMedia,),
           ],
         ),
