@@ -1,7 +1,7 @@
 import 'dart:async';
+import 'dart:typed_data';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:screen_scape/app/components/network_image.dart';
 import 'package:screen_scape/app/functions/functions.dart';
 import 'package:screen_scape/app/resources/app_databases_keys.dart';
 import 'package:screen_scape/app/resources/app_strings.dart';
@@ -26,11 +26,11 @@ class MediaDetailsCubit extends Cubit<MediaDetailsState> {
   //VARIABLES
   List<String> imagesPaths = [];
 
-  List<MediaVideo> videos = [];
+  List<MediaVideo> otherVideos = [];
   List<MediaVideo> trailers = [];
+  List<MediaVideo> allVideos = [];
 
-
-  late Color imageColor;
+  late Uint8List mainImageBytes;
   late MemberCredits credits;
   late String basePath;
   late bool bookmarked;
@@ -39,6 +39,7 @@ class MediaDetailsCubit extends Cubit<MediaDetailsState> {
   //EVENTS
   void getMediaDetails(Media media) async {
     basePath = getBasePath(media);
+    await getMainNetworkImageBytes(media.imgPath);
     await getMediaImages(media.id);
     await getMediaCredits(media.id);
     await getMediaVideos(media.id);
@@ -79,8 +80,9 @@ class MediaDetailsCubit extends Cubit<MediaDetailsState> {
     result.fold((failure){
       emit(MediaDetailsError(failure.message));
     },(videosResults) {
-      videos.addAll(videosResults);
-      trailers.addAll(getTrailers(videos));
+      otherVideos.addAll(getOtherVideos(videosResults));
+      trailers.addAll(getTrailers(videosResults));
+      allVideos = [...trailers, ...otherVideos];
       emit(MediaDetailsSuccess());
     });
 
@@ -92,9 +94,32 @@ class MediaDetailsCubit extends Cubit<MediaDetailsState> {
     return trailers;
   }
 
+  List<MediaVideo> getOtherVideos(List<MediaVideo> videos) {
+    final trailers = videos.where((e) => !e.type.toLowerCase().contains("trailer")).toList();
+    return trailers;
+  }
+
   bool getBookmarkStatus(int id) {
     final result = localApi.get(AppDatabasesKeys.watchlistDatabase, "$id");
     return result!=null;
+  }
+
+  Future getMainNetworkImageBytes(String? path) async {
+
+    emit(MediaDetailsLoading());
+    try {
+      final fullPath = AppFunctions.getNetworkImagePath(path,max: true);
+
+      final bytes = await AppFunctions.getNetworkImageBytes(fullPath, true);
+
+      mainImageBytes =  bytes;
+
+      emit(MediaDetailsSuccess());
+    }
+
+    catch(e) {
+      emit(MediaDetailsError(AppStrings.connectionError));
+    }
   }
 
   Future toggleOnWatchlist(Media media) async {
@@ -123,11 +148,6 @@ class MediaDetailsCubit extends Cubit<MediaDetailsState> {
     return MoviesPaths().basePath;
   }
 
-  Future getImageColor(Media media) async {
-    emit(MediaDetailsLoading());
-    imageColor = await AppFunctions.getImagePalette(defaultNetworkImage(media.imgPath).image);
-    emit(MediaDetailsSuccess());
-  }
 
   void setIsInFullscreen(bool value) {
     inFullScreen = value;

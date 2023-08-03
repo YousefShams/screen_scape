@@ -26,7 +26,7 @@ class MovieDetailsScreen extends StatelessWidget {
                 Column(
                   children: [
                     MovieDetailsImage(
-                        imgPath: AppFunctions.getNetworkImagePath(media.imgPath),
+                        imageBytes: cubit.mainImageBytes,
                         bookmarked : cubit.bookmarked,
                         onAdd : () { cubit.toggleOnWatchlist(media); }
                     ),
@@ -48,7 +48,7 @@ class MovieDetailsScreen extends StatelessWidget {
                 ),
                 MovieDetailsBottom(
                     movie: media,
-                    videos: cubit.trailers,
+                    videos: cubit.allVideos,
                     imagesPaths: cubit.imagesPaths,
                     credits: cubit.credits,
                 )

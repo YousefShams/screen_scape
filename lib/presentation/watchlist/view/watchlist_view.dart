@@ -18,7 +18,7 @@ class WatchlistScreen extends StatelessWidget {
         body: Stack(
           children: [
             const BlurAnimation(),
-            const PageTitle(title: AppStrings.watchlistTitle, paddingFactor: 1),
+            const PageTitle(title: AppStrings.watchlistTitle, paddingFactor: 3),
             WatchlistGrid(results: cubit.media, onAfterPopping: cubit.getLocalMedia,),
           ],
         ),

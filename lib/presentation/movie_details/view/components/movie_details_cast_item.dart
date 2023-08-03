@@ -30,7 +30,7 @@ class MovieCreditsItem extends StatelessWidget {
               textAlign: TextAlign.center, overflow: TextOverflow.ellipsis,
               maxLines: 2,),
             const SizedBox(height: 7),
-            Text(role, maxLines: 1, textAlign: TextAlign.center,
+            Text(role, maxLines: 2, textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.labelMedium,
                 overflow: TextOverflow.fade),
           ],

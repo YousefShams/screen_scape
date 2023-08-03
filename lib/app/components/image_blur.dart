@@ -8,8 +8,9 @@ class ImageBlur extends StatelessWidget {
   final String networkImagePath;
   final double darkness;
   final bool gradient;
+  final double blur;
   const ImageBlur({Key? key, required this.networkImagePath,
-    required this.darkness, this.gradient = false}) : super(key: key);
+    required this.darkness, this.gradient = false, this.blur = 50}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +25,7 @@ class ImageBlur extends StatelessWidget {
         ),
       ),
       child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 50, sigmaY: 50),
+        filter: ImageFilter.blur(sigmaX: blur, sigmaY: blur),
         child: Container(
           decoration: BoxDecoration(
             color: (!gradient) ? color.withOpacity(opacity) : null,

@@ -54,11 +54,17 @@ class PersonCubit extends Cubit<PersonState> {
     List<Media> results = [];
     final List<Media> allMedia;
 
+    final crew = person.credits.crew.toList();
+    crew.sort((a,b)=> b.rateCount.compareTo(a.rateCount));
+
+    final cast = person.credits.cast.toList();
+    cast.sort((a,b)=> b.rateCount.compareTo(a.rateCount));
+
     if(person.credits.cast.length < person.credits.crew.length) {
-      allMedia = [...person.credits.crew,...person.credits.cast];
+      allMedia = [...crew,...cast];
     }
     else {
-      allMedia = [...person.credits.cast,...person.credits.crew];
+      allMedia = [...cast,...crew];
     }
 
     List<int> mediaIDs = [];

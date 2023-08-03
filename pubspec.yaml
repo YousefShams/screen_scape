@@ -46,15 +46,9 @@ dependencies:
   dartz: ^0.10.1
   json_annotation: ^4.8.1
   json_serializable: ^6.7.1
-  palette_generator: ^0.3.3+2
-  flutter_image_compress: ^2.0.4
-  path_provider: ^2.0.15
   youtube_player_flutter: ^8.1.2
-  country_codes: ^2.2.0
-  path: ^1.8.3
-  geolocator: ^9.0.2
-  geocoding: ^2.1.0
   country_code_picker: ^3.0.0
+  image_gallery_saver: ^2.0.3
 
 dev_dependencies:
   flutter_test:
