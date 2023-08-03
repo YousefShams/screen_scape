@@ -8,6 +8,9 @@ import 'package:screen_scape/data/repositories/media_repository.dart';
 import '../../../../data/apis/remote/remote_api.dart';
 import '../../../../data/datasources/media_datasource.dart';
 import '../../../../domain/models/media.dart';
+import '../../../../domain/use_cases/media_credits_use_case.dart';
+import '../../../../domain/use_cases/media_images_use_case.dart';
+import '../../../../domain/use_cases/media_videos_use_case.dart';
 import '../../view_model/cubit.dart';
 import '../../view_model/states.dart';
 
@@ -21,10 +24,12 @@ class MovieDetailsCubitWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ds = MediaDatasource(RemoteApi());
+    final ds = MediaDatasource(RemoteApi(),LocalApi());
     final repo = MediaRepository(ds, CurrentEntity.getCurrentEntityMapper());
     return BlocProvider(
-      create: (_) => MediaDetailsCubit(repo, LocalApi())..getMediaDetails(media),
+      create: (_) => MediaDetailsCubit( GetMediaImagesUseCase(repo),
+          GetMediaVideosUseCase(repo), GetMediaCreditsUseCase(repo),
+          LocalApi())..getMediaDetails(media),
       child: BlocBuilder<MediaDetailsCubit,MediaDetailsState>(
           builder: (context, state) {
             if(state is MediaDetailsLoading) {

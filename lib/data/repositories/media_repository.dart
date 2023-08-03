@@ -232,6 +232,27 @@ class MediaRepository extends BaseMediaRepository {
     }
   }
 
+  @override
+  Future<Either<Failure, List<Media>>> getMediaWatchlist() async {
+    try {
+      final response = await _mediaDS.getMediaWatchlist();
+      return Right(response.getWatchlist());
+    }
+    catch(e) {
+      print(e);
+      return const Left(Failure(StatusMessages.UNKNOWN, StatusCodes.UNKNOWN));
+    }
+  }
 
+  @override
+  Future<Either<Failure, void>> setRegion(String? countryCode) async {
+    try {
+      await _mediaDS.setRegion(countryCode);
+      return const Right(null);
+    }
 
+    catch(e) {
+      return const Left(Failure(StatusMessages.UNKNOWN, StatusCodes.UNKNOWN));
+    }
+  }
 }

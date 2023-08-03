@@ -71,6 +71,13 @@ extension VideosMapper on VideosResponse {
 
 }
 
+extension WatchlistMapper on MediaListLocalResponse {
+  List<Media> getWatchlist() {
+    return data.map((e) {
+      return Media.fromJson(Map<String,dynamic>.from(e));
+    }).toList();
+  }
+}
 
 extension SearchResultsMapper on SearchResponse {
   SearchResults getSearchResults() {

@@ -10,16 +10,21 @@ import 'package:screen_scape/data/paths/paths.dart';
 import 'package:screen_scape/data/paths/tv_show_paths.dart';
 import 'package:screen_scape/domain/models/member_credits.dart';
 import 'package:screen_scape/domain/models/media_video.dart';
+import 'package:screen_scape/domain/use_cases/media_credits_use_case.dart';
+import 'package:screen_scape/domain/use_cases/media_videos_use_case.dart';
 import 'package:screen_scape/presentation/movie_details/view_model/states.dart';
 import '../../../data/apis/local/local_api.dart';
-import '../../../data/repositories/media_repository.dart';
 import '../../../domain/models/media.dart';
+import '../../../domain/use_cases/media_images_use_case.dart';
 
 
 class MediaDetailsCubit extends Cubit<MediaDetailsState> {
-  final MediaRepository mediaRepo;
+  final GetMediaImagesUseCase imagesUC;
+  final GetMediaVideosUseCase videosUC;
+  final GetMediaCreditsUseCase creditsUC;
   final LocalApi localApi;
-  MediaDetailsCubit(this.mediaRepo, this.localApi) : super(MediaDetailsInitial());
+  MediaDetailsCubit(this.imagesUC, this.videosUC, this.creditsUC,
+      this.localApi) : super(MediaDetailsInitial());
 
   static MediaDetailsCubit get(context) => BlocProvider.of(context);
 
@@ -49,7 +54,7 @@ class MediaDetailsCubit extends Cubit<MediaDetailsState> {
   Future getMediaImages(int movieId) async {
     emit(MediaDetailsLoading());
     final path = "$basePath${Paths.imagesPath(movieId)}";
-    final result = await mediaRepo.getMediaImages(path);
+    final result = await imagesUC.execute(path);
 
     result.fold((failure){
       emit(MediaDetailsError(failure.message));
@@ -62,7 +67,7 @@ class MediaDetailsCubit extends Cubit<MediaDetailsState> {
   Future getMediaCredits(int movieId) async {
     emit(MediaDetailsLoading());
     final path = "$basePath${Paths.creditsPath(movieId)}";
-    final result = await mediaRepo.getMediaCredits(path);
+    final result = await creditsUC.execute(path);
     result.fold((failure){
       emit(MediaDetailsError(failure.message));
     },(creditsResult) {
@@ -76,7 +81,7 @@ class MediaDetailsCubit extends Cubit<MediaDetailsState> {
   Future getMediaVideos(int movieId) async {
     emit(MediaDetailsLoading());
     final path = "$basePath${Paths.videosPath(movieId)}";
-    final result = await mediaRepo.getMediaVideo(path);
+    final result = await videosUC.execute(path);
     result.fold((failure){
       emit(MediaDetailsError(failure.message));
     },(videosResults) {

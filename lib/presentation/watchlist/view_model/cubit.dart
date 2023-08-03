@@ -1,13 +1,12 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:screen_scape/app/resources/app_databases_keys.dart';
+import 'package:screen_scape/domain/use_cases/media_watchlist_use_case.dart';
 import 'package:screen_scape/presentation/watchlist/view_model/states.dart';
-import '../../../data/apis/local/local_api.dart';
 import '../../../domain/models/media.dart';
 
 
 class WatchlistCubit extends Cubit<WatchlistState> {
-  final LocalApi localApi;
-  WatchlistCubit(this.localApi) : super(WatchlistInitial());
+  final GetMediaWatchlistUseCase watchlistUC;
+  WatchlistCubit(this.watchlistUC) : super(WatchlistInitial());
 
   static WatchlistCubit get(context) => BlocProvider.of(context);
 
@@ -16,20 +15,15 @@ class WatchlistCubit extends Cubit<WatchlistState> {
 
   //EVENTS
   void getLocalMedia() async {
-    try{
-      emit(WatchlistLoading());
-      const dbName = AppDatabasesKeys.watchlistDatabase;
-      final List results = localApi.getAll(dbName);
-
-      media = results.map((e) {
-        return Media.fromJson(Map<String,dynamic>.from(e));
-      }).toList();
-
-      emit(WatchlistSuccess());
-    }
-    catch(e) {
-      emit(WatchlistSuccess());
-    }
+    emit(WatchlistLoading());
+    final result = await watchlistUC.execute(null);
+    result.fold(
+      (l) => emit(WatchlistError(l.message)),
+      (watchlist) {
+        media = watchlist.toList();
+        emit(WatchlistSuccess());
+      }
+    );
   }
 
 

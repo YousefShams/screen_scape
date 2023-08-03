@@ -24,4 +24,8 @@ abstract class BaseMediaRepository {
 
   Future<Either<Failure, Person>> getPersonDetails(int id);
 
+  Future<Either<Failure, List<Media>>> getMediaWatchlist();
+
+  Future<Either<Failure, void>> setRegion(String? countryCode);
+
 }

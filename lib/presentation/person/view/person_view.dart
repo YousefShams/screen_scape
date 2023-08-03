@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:screen_scape/app/functions/functions.dart';
 import 'package:screen_scape/app/resources/app_assets.dart';
+import 'package:screen_scape/domain/use_cases/media_people_use_case.dart';
 import 'package:screen_scape/presentation/person/view/components/person_bio.dart';
 import 'package:screen_scape/presentation/person/view/components/person_cubit_widget.dart';
 import 'package:screen_scape/presentation/person/view/components/person_image.dart';
@@ -11,6 +12,7 @@ import 'package:screen_scape/presentation/person/view/components/person_profile_
 import 'package:screen_scape/presentation/person/view_model/cubit.dart';
 import 'package:screen_scape/presentation/person/view_model/states.dart';
 
+import '../../../data/apis/local/local_api.dart';
 import '../../../data/apis/remote/remote_api.dart';
 import '../../../data/datasources/media_datasource.dart';
 import '../../../data/paths/current_path.dart';
@@ -24,9 +26,9 @@ class PersonScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final id = ModalRoute.of(context)!.settings.arguments as int;
     final mapper = CurrentEntity.getCurrentEntityMapper();
-    final repo = MediaRepository(MediaDatasource(RemoteApi()), mapper);
+    final repo = MediaRepository(MediaDatasource(RemoteApi(),LocalApi()), mapper);
     return PersonCubitWidget<PersonCubit, PersonState, PersonLoading, PersonError>(
-      cubit: PersonCubit(repo)..getPerson(id),
+      cubit: PersonCubit(GetMediaPersonUseCase(repo))..getPerson(id),
       builder: (cubit) => Scaffold(
         body: SafeArea(
           child: Stack(

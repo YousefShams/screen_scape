@@ -20,7 +20,9 @@ abstract class Paths {
   static String videosPath(int movieId) => "/$movieId/videos";
 
   static String discoverPath(String base) => "/discover$base";
-  
+
+  String get name;
+
   String get basePath;
 
   String get topPath;

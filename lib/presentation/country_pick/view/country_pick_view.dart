@@ -3,11 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:screen_scape/app/components/page_title.dart';
 import 'package:screen_scape/app/extensions/screen_ext.dart';
 import 'package:screen_scape/app/functions/functions.dart';
-import 'package:screen_scape/app/resources/app_databases_keys.dart';
 import 'package:screen_scape/app/resources/app_routes.dart';
 import 'package:screen_scape/app/resources/app_strings.dart';
 import 'package:screen_scape/app/resources/app_values.dart';
+import 'package:screen_scape/domain/use_cases/media_region_use_case.dart';
 import '../../../data/apis/local/local_api.dart';
+import '../../../data/apis/remote/remote_api.dart';
+import '../../../data/datasources/media_datasource.dart';
+import '../../../data/paths/current_path.dart';
+import '../../../data/repositories/media_repository.dart';
 
 class CountryPickScreen extends StatefulWidget {
   const CountryPickScreen({Key? key}) : super(key: key);
@@ -18,7 +22,10 @@ class CountryPickScreen extends StatefulWidget {
 
 class _CountryPickScreenState extends State<CountryPickScreen> {
 
+
   CountryCode? countryCode;
+  final regionUS = SetMediaRegionUseCase(MediaRepository(MediaDatasource(
+      RemoteApi(),LocalApi()), CurrentEntity.getCurrentEntityMapper()));
 
   @override
   Widget build(BuildContext context) {
@@ -69,10 +76,7 @@ class _CountryPickScreenState extends State<CountryPickScreen> {
                 child: FilledButton.tonal(
                    onPressed: () async {
                       if(countryCode!=null) {
-                        await LocalApi().save(AppDatabasesKeys.settingsDatabase,
-                          {AppDatabasesKeys.iso: countryCode?.code,
-                            AppDatabasesKeys.onboardingDone: true
-                          }).then((value) => Navigator.pushReplacementNamed(
+                        regionUS.execute(countryCode?.code).then((value) => Navigator.pushReplacementNamed(
                             context, AppRoutes.homeRoute));
                       }
                       else {

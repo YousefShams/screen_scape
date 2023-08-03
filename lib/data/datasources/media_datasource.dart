@@ -1,10 +1,12 @@
+// ignore_for_file: curly_braces_in_flow_control_structures
+
 import 'dart:convert';
 import 'package:screen_scape/app/resources/app_databases_keys.dart';
 import 'package:screen_scape/data/apis/local/local_api.dart';
 import 'package:screen_scape/data/paths/paths.dart';
+import 'package:screen_scape/data/queries/query.dart';
 import 'package:screen_scape/data/response/response.dart';
 import '../apis/remote/remote_api.dart';
-
 
 abstract class BaseMediaDatasource {
 
@@ -25,12 +27,16 @@ abstract class BaseMediaDatasource {
 
   Future<PersonResponse> getPersonDetails(int id);
 
+  Future<MediaListLocalResponse> getMediaWatchlist();
+
+  Future setRegion(String? countryCode);
 }
 
 
 class MediaDatasource extends BaseMediaDatasource {
   final RemoteApi _remoteApi;
-  MediaDatasource(this._remoteApi);
+  final LocalApi _localApi;
+  MediaDatasource(this._remoteApi, this._localApi);
 
   @override
   Future<MediaResponse> getMediaByID(String id) async {
@@ -40,15 +46,20 @@ class MediaDatasource extends BaseMediaDatasource {
 
   @override
   Future<MediaListResponse> getMediaList(String listPath, {int page = 1}) async {
-    final region = await LocalApi().get(AppDatabasesKeys.settingsDatabase, AppDatabasesKeys.iso);
-    String regionQuery = "&region=$region";
-    if(!listPath.contains("playing")) regionQuery = "";
 
-    final result = await _remoteApi.get(listPath,
-        query: "&page=$page$regionQuery");
+    final region = await _localApi.get(AppDatabasesKeys.settingsDatabase,
+        AppDatabasesKeys.iso);
 
-    final data = List<Map<String, dynamic>>.from(
-        jsonDecode(result.body)["results"]);
+    String pageQuery = Query.pageQuery(page);
+    final String regionQuery;
+
+    if(!listPath.contains("playing") || region==null) regionQuery = "";
+    else regionQuery = Query.regionQuery(region);
+
+
+    final result = await _remoteApi.get(listPath, query: "$pageQuery&$regionQuery");
+
+    final data = List<Map<String, dynamic>>.from(jsonDecode(result.body)["results"]);
 
     return MediaListResponse(data, status: result.statusCode);
   }
@@ -61,7 +72,9 @@ class MediaDatasource extends BaseMediaDatasource {
 
     final paths = List.filled(ids.length, listPath);
 
-    final queries = ids.map((id) => "with_genres=$id&page=$page").toList();
+    String pageQuery = Query.pageQuery(page);
+
+    final queries = ids.map((id) => "${Query.genreQuery(id)}&$pageQuery").toList();
 
     final responses = await _remoteApi.getMultiple(paths, queries);
 
@@ -98,8 +111,8 @@ class MediaDatasource extends BaseMediaDatasource {
 
   @override
   Future<SearchResponse> getSearchedMedia(String path,String searchText, int page) async {
-    final query = "query=$searchText&page=$page";
-    final response = await _remoteApi.get(path,query: query,);
+    final query = "${Query.searchQuery(searchText)}& ${Query.pageQuery(page)}";
+    final response = await _remoteApi.get(path,query: query);
     final data = List<Map<String,dynamic>>.from(jsonDecode(response.body)["results"]);
     return SearchResponse(data, status: response.statusCode);
   }
@@ -113,6 +126,19 @@ class MediaDatasource extends BaseMediaDatasource {
     return PersonResponse(result, status: response.statusCode);
   }
 
+  @override
+  Future<MediaListLocalResponse> getMediaWatchlist() async {
+    const dbName = AppDatabasesKeys.watchlistDatabase;
+    final results = List<Map>.from(_localApi.getAll(dbName));
+    return MediaListLocalResponse(results);
+  }
+
+  @override
+  Future setRegion(String? countryCode) async {
+    await _localApi.save(AppDatabasesKeys.settingsDatabase,
+        {AppDatabasesKeys.iso: countryCode,
+          AppDatabasesKeys.onboardingDone: true});
+  }
 
 }
 
