@@ -18,8 +18,14 @@ class AppStyles {
   );
 
   static final lighterImageGradient = LinearGradient(
+      begin: Alignment.bottomCenter, end: Alignment.topCenter,
+      colors: [Colors.black.withOpacity(0.6), Colors.black.withOpacity(0.3), Colors.black.withOpacity(0.1)],
+      stops: const [0.05 , 0.5,  0.9]
+  );
+
+  static final draggableSheetGradient = LinearGradient(
       begin: Alignment.bottomLeft, end: Alignment.topRight,
-      colors: [Colors.black.withOpacity(0.8), Colors.black.withOpacity(0.5), Colors.black.withOpacity(0.2)],
+      colors: [Colors.white.withOpacity(0.15), Colors.white.withOpacity(0.07), Colors.white.withOpacity(0.04)],
       stops: const [0.05 , 0.5,  0.9]
   );
 

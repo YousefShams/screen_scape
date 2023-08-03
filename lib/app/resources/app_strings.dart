@@ -38,7 +38,8 @@ class AppStrings {
 
   static const countryPick = "Choose your country";
   static const countryError = "Please pick a country before proceeding";
-
+  static const imageSaved = "Saved to your gallery successfully!";
+  static const connectionError = "Check your connection and try again.";
 
   static String get greetingsString {
     final currentHour = DateTime.now().hour;

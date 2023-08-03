@@ -9,6 +9,8 @@ class AppConstants {
   //URLS
   static const baseUrl = "https://api.themoviedb.org/3";
   static const imageBaseUrl = "https://image.tmdb.org/t/p/w500";
+  static const originalImageBaseUrl = "https://image.tmdb.org/t/p/original";
+
   static const moviePath = "/movie";
   static const tvPath = "/tv";
 

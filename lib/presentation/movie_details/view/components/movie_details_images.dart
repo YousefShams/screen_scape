@@ -31,7 +31,7 @@ class MovieDetailsImages extends StatelessWidget {
                     child: GestureDetector(
                       onTap: () {
                         Navigator.push(context, PageTransition(
-                            MovieFullScreenImage(imagePath:imageNetworkPath)));
+                            MovieFullScreenImage(imagePath:imagesPaths[index])));
                       },
                       child: defaultNetworkImage(imageNetworkPath, cover: true),
                     ),

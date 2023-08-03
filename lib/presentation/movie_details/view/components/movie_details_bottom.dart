@@ -1,6 +1,5 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:screen_scape/app/resources/app_colors.dart';
 import 'package:screen_scape/domain/models/member_credits.dart';
 import 'package:screen_scape/presentation/movie_details/view/components/movie_details_cast_list.dart';
 import 'package:screen_scape/presentation/movie_details/view/components/movie_details_genres.dart';
@@ -52,9 +51,13 @@ class _MovieDetailsBottomState extends State<MovieDetailsBottom> {
       builder: (BuildContext context, ScrollController scrollController) {
         return Container(
           width: double.maxFinite,
-          decoration: const BoxDecoration(
-              color: AppColors.scaffoldBrighterDarkBackground,
-              borderRadius: BorderRadius.only(
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.bottomLeft, end: Alignment.topRight,
+                  colors: [Colors.black.withOpacity(0.6), Colors.black.withOpacity(0.3), Colors.black.withOpacity(0.15)],
+                  stops: const [0.05 , 0.5,  0.9]
+              ),
+              borderRadius: const BorderRadius.only(
                 topRight: Radius.circular(20),
                 topLeft: Radius.circular(20),
               )

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:screen_scape/app/components/image_blur.dart';
+import 'package:screen_scape/app/extensions/screen_ext.dart';
 import 'package:screen_scape/domain/models/media_video.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class MediaDetailsFullscreenVideo extends StatefulWidget {
   final MediaVideo video;
-  final int seconds;
-  const MediaDetailsFullscreenVideo({Key? key, required this.video, required this.seconds}) : super(key: key);
+  const MediaDetailsFullscreenVideo({Key? key, required this.video}) : super(key: key);
 
   @override
   State<MediaDetailsFullscreenVideo> createState() => _MediaDetailsFullscreenVideoState();
@@ -27,20 +29,27 @@ class _MediaDetailsFullscreenVideoState extends State<MediaDetailsFullscreenVide
         return false;
       },
       child: Scaffold(
-        body: YoutubePlayerBuilder(
-          onExitFullScreen: () { },
-          player: YoutubePlayer(
-            controller: vidController,
-            onReady: () {
-              vidController.seekTo(Duration(milliseconds: widget.seconds));
-            },
-            width: double.maxFinite,
-          ),
-          builder: (context, player) {
-            return Center(
-              child: player,
-            );
-          }
+        body: Stack(
+          alignment: Alignment.center,
+          children: [
+            ImageBlur(networkImagePath: YoutubePlayer.getThumbnail(
+                videoId: widget.video.key, quality: ThumbnailQuality.standard),
+                blur: 15, darkness: 0.65),
+            YoutubePlayerBuilder(
+                onExitFullScreen: () { },
+                player: YoutubePlayer(
+                  controller: vidController,
+                  width: context.getWidth(),
+                  onEnded: (_) {
+                    vidController.seekTo(const Duration(seconds: 0));
+                    vidController.pause();
+                  },
+                ),
+                builder: (context, player) {
+                  return Center(child: player);
+                }
+            )
+          ],
         )
       ),
     );
@@ -52,7 +61,7 @@ class _MediaDetailsFullscreenVideoState extends State<MediaDetailsFullscreenVide
     vidController = YoutubePlayerController(
         initialVideoId: widget.video.key,
         flags: const YoutubePlayerFlags(
-            autoPlay: false, disableDragSeek: true,
+            autoPlay: true, disableDragSeek: false, mute: false,
             showLiveFullscreenButton: false, forceHD: true
         )
     );
@@ -62,6 +71,8 @@ class _MediaDetailsFullscreenVideoState extends State<MediaDetailsFullscreenVide
   @override
   void dispose() {
     vidController.dispose();
+    SystemChrome.setPreferredOrientations(DeviceOrientation.values);
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.leanBack);
     super.dispose();
   }
 }

@@ -1,17 +1,16 @@
+import 'dart:typed_data';
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'package:screen_scape/app/components/network_image.dart';
 import 'package:screen_scape/app/extensions/screen_ext.dart';
 import 'package:screen_scape/app/resources/app_colors.dart';
 import 'package:screen_scape/app/resources/app_styles.dart';
 import 'package:screen_scape/app/resources/app_values.dart';
 
 class MovieDetailsImage extends StatelessWidget {
-  final String imgPath;
+  final Uint8List imageBytes;
   final Function onAdd;
   final bool bookmarked;
-  const MovieDetailsImage({Key? key, required this.imgPath, required this.onAdd, required this.bookmarked}) : super(key: key);
+  const MovieDetailsImage({Key? key, required this.imageBytes, required this.onAdd, required this.bookmarked}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,8 +24,10 @@ class MovieDetailsImage extends StatelessWidget {
           width: double.maxFinite,
           height: context.getHeight()*heightFactor,
           decoration: BoxDecoration(
-            image: DecorationImage(fit: BoxFit.cover,
-              image: defaultNetworkImage(imgPath).image,
+            image: DecorationImage(
+              alignment: const Alignment(0,0.5),
+              fit: BoxFit.cover,
+              image: Image.memory(imageBytes).image,
             ),
             borderRadius: borderRadius,
             //boxShadow: [BoxShadow(color: imageColor, blurRadius: 30, offset: const Offset(0, 20))]

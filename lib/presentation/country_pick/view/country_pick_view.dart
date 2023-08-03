@@ -7,7 +7,6 @@ import 'package:screen_scape/app/resources/app_databases_keys.dart';
 import 'package:screen_scape/app/resources/app_routes.dart';
 import 'package:screen_scape/app/resources/app_strings.dart';
 import 'package:screen_scape/app/resources/app_values.dart';
-
 import '../../../data/apis/local/local_api.dart';
 
 class CountryPickScreen extends StatefulWidget {
@@ -35,6 +34,8 @@ class _CountryPickScreenState extends State<CountryPickScreen> {
                 onPressed: (){},
                 child: CountryCodePicker(
                   dialogBackgroundColor: Colors.transparent,
+                  showFlag: true,
+                  showFlagDialog: true,
                   barrierColor: Colors.transparent,
                   initialSelection: CountryCode.fromCountryCode("US").name,
                   onChanged: (country) {
@@ -42,13 +43,13 @@ class _CountryPickScreenState extends State<CountryPickScreen> {
                       countryCode = country;
                     });
                   },
-                  padding: EdgeInsets.zero,
+                  padding: const EdgeInsets.fromLTRB(20,20,20,20),
                   hideMainText: true,
                   backgroundColor: Theme.of(context).scaffoldBackgroundColor,
                   textStyle: Theme.of(context).textTheme.bodyMedium,
                   showCountryOnly: true,
                   alignLeft: true,
-                  flagWidth: 150,
+                  flagWidth: 40,
                   boxDecoration: BoxDecoration(
                     color: Theme.of(context).scaffoldBackgroundColor,
                   ),

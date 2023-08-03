@@ -1,13 +1,10 @@
-import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
-import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart';
-import 'package:palette_generator/palette_generator.dart';
-import 'package:path/path.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:screen_scape/app/constants/constants.dart';
+import 'package:screen_scape/app/resources/app_strings.dart';
 import '../../data/mapper/mapper.dart';
 import '../../data/paths/current_path.dart';
 import '../../data/paths/movie_paths.dart';
@@ -32,38 +29,45 @@ class AppFunctions {
     );
   }
 
-  static String getNetworkImagePath(String? imgPath) {
+  static String getNetworkImagePath(String? imgPath, {bool max = false}) {
     if(imgPath==null) return "https://i0.wp.com/port2flavors.com/wp-content/uploads/2022/07/placeholder-614.png?fit=1200%2C800&ssl=1";
+
     if(imgPath.contains("http")) {
       return imgPath;
     }
     else {
-      return "${AppConstants.imageBaseUrl}$imgPath";
+      final base = max ?  AppConstants.originalImageBaseUrl : AppConstants.imageBaseUrl;
+      return "$base$imgPath";
     }
   }
 
-  static Future<void> downloadNetworkImage(String path) async {
+  static Future<void> saveNetworkImageToGallery(String path) async {
     try {
       final url = getNetworkImagePath(path);
       final response = await get(Uri.parse(url));
 
-      // Get the image name
-      final imageName = basename(url);
-      // Get the document directory path
-      final appDir = await getApplicationDocumentsDirectory();
 
-      // This is the saved image path
-      // You can use it to display the saved image later
-      final localPath = join(appDir.path, imageName);
+      await ImageGallerySaver.saveImage(
+        response.bodyBytes,
+        quality: 100,
+      );
 
-      // Downloading
-      final imageFile = File(localPath);
-      await imageFile.writeAsBytes(response.bodyBytes);
-      showToastMessage("Downloaded successfully!", isSuccess: true);
+      showToastMessage(AppStrings.imageSaved, isSuccess: true);
     }
 
     catch(e) {
       showToastMessage("Some error occurred, try again later.", isSuccess: true);
+    }
+  }
+
+  static Future<Uint8List> getNetworkImageBytes(String path, bool max) async {
+    try {
+      final url = getNetworkImagePath(path, max: max);
+      final response = await get(Uri.parse(url));
+      return Uint8List.fromList(response.bodyBytes);
+    }
+    catch(e) {
+      rethrow;
     }
   }
 
@@ -107,23 +111,23 @@ class AppFunctions {
     return title;
   }
 
-  static Future<Image> compressImage(Uint8List image, int qualityPercentage, String name) async {
+  // static Future<Image> compressImage(Uint8List image, int qualityPercentage, String name) async {
+  //
+  //   var result = await FlutterImageCompress.compressWithList(
+  //     image,
+  //     minWidth: 100,
+  //     minHeight: 100,
+  //     quality: qualityPercentage,
+  //   );
+  //
+  //   return Image.memory(result);
+  // }
 
-    var result = await FlutterImageCompress.compressWithList(
-      image,
-      minWidth: 100,
-      minHeight: 100,
-      quality: qualityPercentage,
-    );
-
-    return Image.memory(result);
-  }
-
-  static Future<Color> getImagePalette (ImageProvider imageProvider) async {
-    final PaletteGenerator paletteGenerator = await PaletteGenerator
-        .fromImageProvider(imageProvider);
-    return paletteGenerator.dominantColor!.color;
-  }
+  // static Future<Color> getImagePalette (ImageProvider imageProvider) async {
+  //   final PaletteGenerator paletteGenerator = await PaletteGenerator
+  //       .fromImageProvider(imageProvider);
+  //   return paletteGenerator.dominantColor!.color;
+  // }
 
   static String capitalizeText(String text) {
     return "${text[0].toUpperCase()}${text.substring(1)}";

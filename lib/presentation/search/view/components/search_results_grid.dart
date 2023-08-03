@@ -25,7 +25,7 @@ class SearchResultsGrid extends StatelessWidget {
                   child: SearchPersonsList(persons: results.persons)),
 
               Visibility(
-                  visible: results.media.isNotEmpty,
+                  visible: results.media.isNotEmpty && results.persons.isNotEmpty,
                 child: const PageTitle(title: "Movies, TV-Shows", extraTopPadding: false,
               ),
               ),

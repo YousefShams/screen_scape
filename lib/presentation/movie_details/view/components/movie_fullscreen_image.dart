@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:screen_scape/app/extensions/screen_ext.dart';
 import 'package:screen_scape/app/functions/functions.dart';
+import 'package:screen_scape/app/resources/app_strings.dart';
 
 class MovieFullScreenImage extends StatelessWidget {
   final String imagePath;
@@ -8,6 +9,7 @@ class MovieFullScreenImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final fullPath = AppFunctions.getNetworkImagePath(imagePath, max:true);
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -15,8 +17,13 @@ class MovieFullScreenImage extends StatelessWidget {
         leading: IconButton(onPressed: (){Navigator.pop(context);},
             icon: Icon(Icons.arrow_back_ios_rounded, color: Theme.of(context).textTheme.bodyMedium?.color,)),
         actions : [
-          IconButton(onPressed: (){ AppFunctions.downloadNetworkImage(imagePath); },
-              icon: Icon(Icons.file_download_outlined, color: Theme.of(context).textTheme.bodyMedium?.color,))
+          Padding(
+            padding: const EdgeInsets.only(right: 10),
+            child: IconButton(onPressed: (){
+              AppFunctions.saveNetworkImageToGallery(fullPath); },
+                icon: Icon(Icons.file_download_outlined, size: 30,
+                  color: Theme.of(context).textTheme.bodyMedium?.color,)),
+          )
         ],
       ),
       body: InteractiveViewer(
@@ -25,7 +32,21 @@ class MovieFullScreenImage extends StatelessWidget {
           height: context.getHeight(),
           width: double.maxFinite,
           child: Image.network(
-            imagePath, width: double.maxFinite, fit: BoxFit.contain,
+            fullPath, width: double.maxFinite, fit: BoxFit.contain,
+            loadingBuilder: (_,widget, bytes) {
+              if(bytes!=null) {
+                if(bytes.cumulativeBytesLoaded/bytes.expectedTotalBytes!.toInt()==1) {
+                  return widget;
+                }
+                else {
+                  return const CircularProgressIndicator();
+                }
+              }
+              return widget;
+            },
+            errorBuilder: (x,y,z) {
+              return const Text(AppStrings.connectionError);
+            },
             isAntiAlias: true,
           ),
         ),
