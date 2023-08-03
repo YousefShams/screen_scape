@@ -41,7 +41,6 @@ class StatusCodes {
   static const int UNAUTHORIZED = 401;
   static const int NO_CONNECTION = -2;
   static const int UNKNOWN = -1;
-
 }
 
 

@@ -5,17 +5,20 @@ import 'package:screen_scape/app/extensions/screen_ext.dart';
 import 'package:screen_scape/app/resources/app_colors.dart';
 import 'package:screen_scape/data/apis/local/local_api.dart';
 import 'package:screen_scape/data/paths/paths.dart';
-import 'package:screen_scape/data/repositories/media_repository.dart';
+import 'package:screen_scape/domain/use_cases/media_genres_use_case.dart';
+import 'package:screen_scape/domain/use_cases/media_list_use_case.dart';
 import 'package:screen_scape/presentation/home/view_model/states.dart';
 import '../../../data/paths/movie_paths.dart';
 import '../../../domain/models/media.dart';
 
 
 class HomeCubit extends Cubit<HomeState> {
-  final MediaRepository mediaRepo;
+  final GetMediaListUseCase mediaListUC;
+  final GetMediaGenresUseCase mediaGenresUC;
+
   final LocalApi localApi;
   final Paths paths;
-  HomeCubit(this.mediaRepo, this.paths, this.localApi) : super(HomeInitialState());
+  HomeCubit(this.mediaListUC, this.mediaGenresUC, this.paths, this.localApi) : super(HomeInitialState());
 
   static HomeCubit get(context) => BlocProvider.of(context);
 
@@ -47,7 +50,8 @@ class HomeCubit extends Cubit<HomeState> {
   Future<List<Media>> _getMediaList(String listPath, {int page = 1}) async {
     emit(HomeLoadingState());
     List<Media> mediaResult = [];
-    final result = await mediaRepo.getMediaList(listPath, page: page);
+    final inputs = GetMediaListUseCaseInputs(listPath, page);
+    final result = await mediaListUC.execute(inputs);
     result.fold((failure) {
       emit(HomeErrorState(failure.message));
     }, (media) {
@@ -60,8 +64,9 @@ class HomeCubit extends Cubit<HomeState> {
 
   Future<List<List<Media>>> _getMediaOfGenres() async {
     emit(HomeLoadingState());
-    final result = await mediaRepo.getMediaOfGenres(
-        Paths.discoverPath(paths.basePath), AppConstants.appViewGenres);
+    final inputs = GetMediaGenresUseCaseInputs
+      (Paths.discoverPath(paths.basePath), AppConstants.appViewGenres, 1);
+    final result = await mediaGenresUC.execute(inputs);
 
     List<List<Media>> mediaLists = [];
 
@@ -101,7 +106,6 @@ class HomeCubit extends Cubit<HomeState> {
       emit(HomeUpdateState());
     });
   }
-
 
   double getScale(int index) {
     if(currentMediaIndex == index) {

@@ -14,7 +14,7 @@ class WatchlistGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: kToolbarHeight*2.5),
+      padding: EdgeInsets.only(top: results.isNotEmpty ? kToolbarHeight*2.5 : 20),
       child: results.isNotEmpty ?
       MediaGridView(movies: results, onAfterPopping: onAfterPopping, expanded: false,) :
       const Center(

@@ -10,4 +10,6 @@ class MoviesPaths implements Paths {
   @override
   String get topPath => Paths.nowPlayingPath;
 
+  @override
+  String get name => "Movies";
 }

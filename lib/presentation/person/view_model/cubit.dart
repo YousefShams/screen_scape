@@ -2,13 +2,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:screen_scape/app/functions/functions.dart';
 import 'package:screen_scape/domain/models/person.dart';
 import 'package:screen_scape/presentation/person/view_model/states.dart';
-import '../../../data/repositories/media_repository.dart';
 import '../../../domain/models/media.dart';
+import '../../../domain/use_cases/media_people_use_case.dart';
 
 
 class PersonCubit extends Cubit<PersonState> {
-  final MediaRepository mediaRepo;
-  PersonCubit(this.mediaRepo) : super(PersonLoading());
+  final GetMediaPersonUseCase personUC;
+  PersonCubit(this.personUC) : super(PersonLoading());
 
   static PersonCubit get(context) => BlocProvider.of(context);
 
@@ -20,7 +20,7 @@ class PersonCubit extends Cubit<PersonState> {
   //EVENTS
   void getPerson(int id) async {
     emit(PersonLoading());
-    final result = await mediaRepo.getPersonDetails(id);
+    final result = await personUC.execute(id);
     result.fold(
        (l) {
          emit(PersonError(l.message));

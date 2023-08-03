@@ -15,6 +15,11 @@ class MediaListResponse extends BaseResponse {
   const MediaListResponse(this.data, {required int status}) : super(status);
 }
 
+class MediaListLocalResponse {
+  final List<Map<dynamic,dynamic>> data;
+  const MediaListLocalResponse(this.data);
+}
+
 class MovieResponse extends MediaResponse {
   MovieResponse(super.data, {required super.status});
 }

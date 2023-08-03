@@ -2,14 +2,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:screen_scape/domain/models/movies_list_model.dart';
 import 'package:screen_scape/presentation/movies_list/view_model/states.dart';
-
-import '../../../data/repositories/media_repository.dart';
 import '../../../domain/models/media.dart';
+import '../../../domain/use_cases/media_genres_use_case.dart';
+import '../../../domain/use_cases/media_list_use_case.dart';
 
 
 class MoviesListCubit extends Cubit<MoviesListState> {
-  final MediaRepository mediaRepo;
-  MoviesListCubit(this.mediaRepo) : super(MoviesListInitial());
+  final GetMediaListUseCase mediaListUC;
+  final GetMediaGenresUseCase mediaGenresUC;
+
+  MoviesListCubit(this.mediaListUC, this.mediaGenresUC) : super(MoviesListInitial());
 
   static MoviesListCubit get(context) => BlocProvider.of(context);
 
@@ -52,7 +54,8 @@ class MoviesListCubit extends Cubit<MoviesListState> {
 
   Future _getMediaList(String listPath, {int page = 1}) async {
     emit(MoviesListLoading());
-    final result = await mediaRepo.getMediaList(listPath, page: page);
+    final inputs = GetMediaListUseCaseInputs(listPath, page);
+    final result = await mediaListUC.execute(inputs);
     result.fold((failure) {
       emit(MoviesListError(failure.message));
     }, (mediaResults) {
@@ -65,7 +68,8 @@ class MoviesListCubit extends Cubit<MoviesListState> {
 
   Future _getMediaOfGenre(String listPath, int id,  {int page = 1}) async {
     emit(MoviesListLoading());
-    final result = await mediaRepo.getMediaOfGenres(listPath, [id], page: page);
+    final inputs = GetMediaGenresUseCaseInputs(listPath, [id], page);
+    final result = await mediaGenresUC.execute(inputs);
     result.fold((failure) {
       emit(MoviesListError(failure.message));
     }, (mediaResults) {

@@ -1,14 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:screen_scape/domain/models/search_results.dart';
+import 'package:screen_scape/domain/use_cases/media_search_use_case.dart';
 import 'package:screen_scape/presentation/search/view_model/states.dart';
-
-import '../../../data/repositories/media_repository.dart';
 
 
 class SearchCubit extends Cubit<SearchState> {
-  final MediaRepository mediaRepo;
-  SearchCubit(this.mediaRepo) : super(SearchInitial());
+  final GetMediaSearchUseCase searchUC;
+  SearchCubit(this.searchUC) : super(SearchInitial());
 
   static SearchCubit get(context) => BlocProvider.of(context);
 
@@ -28,7 +27,8 @@ class SearchCubit extends Cubit<SearchState> {
   Future getSearchPages(int pages, String searchText) async {
     emit(SearchLoading());
     for(int pageNumber = 1 ; pageNumber <= 3 ; pageNumber++) {
-      final searchResults = await mediaRepo.getSearchedMedia(searchText, pageNumber);
+      final inputs = GetMediaSearchUseCaseInputs(searchText, pageNumber);
+      final searchResults = await searchUC.execute(inputs);
       searchResults.fold(
           (failure){
             emit(SearchError(failure.message));
