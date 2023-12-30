@@ -7,7 +7,8 @@ import '../../../../app/resources/app_values.dart';
 class SearchTextField extends StatelessWidget {
   final TextEditingController controller;
   final Function onComplete;
-  const SearchTextField({super.key, required this.controller, required this.onComplete,});
+  final FocusNode focusNode;
+  const SearchTextField({super.key, required this.controller, required this.onComplete, required this.focusNode,});
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +22,7 @@ class SearchTextField extends StatelessWidget {
       child: TextFormField(
         textInputAction: TextInputAction.search,
         controller: controller,
+        focusNode: focusNode,
         onFieldSubmitted: (_) { onComplete(); },
         style: AppFonts.getRegularStyle(),
         decoration: const InputDecoration(

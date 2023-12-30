@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:screen_scape/app/components/media_grid_view.dart';
 import 'package:screen_scape/app/components/page_title.dart';
-import 'package:screen_scape/app/resources/app_assets.dart';
-import 'package:screen_scape/app/resources/app_strings.dart';
 import 'package:screen_scape/domain/models/search_results.dart';
+import 'package:screen_scape/presentation/search/view/components/search_info.dart';
 import 'package:screen_scape/presentation/search/view/components/search_persons.dart';
-import '../../../../app/components/info_screen.dart';
 
 
 class SearchResultsGrid extends StatelessWidget {
@@ -14,8 +12,8 @@ class SearchResultsGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return results.persons.isNotEmpty || results.media.isNotEmpty ?
-        Expanded(
+    if (results.persons.isNotEmpty || results.media.isNotEmpty) {
+      return Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -35,8 +33,9 @@ class SearchResultsGrid extends StatelessWidget {
               ),
           ]
         )
-        )
-        : const Center(child:
-        InfoScreen(message: AppStrings.searchEmpty, appAsset: AppAssets.search,));
+        );
+    } else {
+      return const SearchInfoScreen();
+    }
   }
 }

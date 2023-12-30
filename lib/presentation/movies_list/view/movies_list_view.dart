@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:screen_scape/app/components/blur_animated_background.dart';
 import 'package:screen_scape/domain/models/movies_list_model.dart';
 import 'package:screen_scape/presentation/movies_list/view/components/movies_list_cubit_widget.dart';
 import 'package:screen_scape/presentation/movies_list/view/components/movies_list_grid.dart';
@@ -13,12 +14,17 @@ class MoviesListScreen extends StatelessWidget {
     return MoviesListCubitWidget(
       moviesData : moviesData,
       builder: (cubit, state) => Scaffold(
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        body: Stack(
           children: [
-            MoviesListTitle(title: moviesData.title),
-            MoviesListGrid(movies: cubit.media,
-                controller: cubit.controller, state: state,)
+            const BlurAnimation(),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                MoviesListTitle(title: moviesData.title),
+                MoviesListGrid(movies: cubit.media,
+                  controller: cubit.controller, state: state,)
+              ],
+            )
           ],
         )
       ),

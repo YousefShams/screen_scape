@@ -26,7 +26,7 @@ class Media {
   @JsonKey(name : "popularity")
   final double popularity;
   @JsonKey(name : "release_date")
-  final String releaseDate;
+  final String? releaseDate;
 
   /*
    0 => movie

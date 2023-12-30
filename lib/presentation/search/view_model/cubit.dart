@@ -14,6 +14,7 @@ class SearchCubit extends Cubit<SearchState> {
   //VARIABLES
   SearchResults results = SearchResults([], []);
   final controller = TextEditingController();
+  final focusNode = FocusNode();
 
   //EVENTS
   Future search() async {

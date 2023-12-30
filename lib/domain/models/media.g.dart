@@ -16,7 +16,7 @@ Media _$MediaFromJson(Map<String, dynamic> json) => Media(
       json['id'] as int,
       (json['genre_ids'] as List<dynamic>?)?.map((e) => e as int).toList(),
       (json['popularity'] as num).toDouble(),
-      (json['first_air_date'] ?? json['release_date']) as String,
+      (json['first_air_date'] ?? json['release_date']) as String?,
       json["type"] ?? (json['name']!=null ? 1 : 0),
     );
 

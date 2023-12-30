@@ -239,7 +239,6 @@ class MediaRepository extends BaseMediaRepository {
       return Right(response.getWatchlist());
     }
     catch(e) {
-      print(e);
       return const Left(Failure(StatusMessages.UNKNOWN, StatusCodes.UNKNOWN));
     }
   }
