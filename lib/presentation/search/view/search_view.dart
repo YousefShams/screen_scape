@@ -20,8 +20,9 @@ class SearchScreen extends StatelessWidget {
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const PageTitle(title: AppStrings.searchTitle, paddingFactor: 3,),
-            SearchTextField(controller: cubit.controller, onComplete : cubit.search),
+            const PageTitle(title: AppStrings.searchTitle, paddingFactor: 2,),
+            SearchTextField(controller: cubit.controller,
+                focusNode :cubit.focusNode, onComplete : cubit.search),
             SearchResultsGrid(results: cubit.results)
           ],
         ),

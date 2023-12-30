@@ -10,5 +10,5 @@ class TVShowPaths implements Paths {
   String get topPath => Paths.popularPath;
 
   @override
-  String get name => "TV-Shows";
+  String get name => "Shows";
 }

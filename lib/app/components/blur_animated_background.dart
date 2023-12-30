@@ -27,7 +27,7 @@ class BlurAnimation extends StatelessWidget {
             ),
           ),
           BackdropFilter(
-            filter : ImageFilter.blur(sigmaX: 40  ,sigmaY: 40),
+            filter : ImageFilter.blur(sigmaX: 50  ,sigmaY: 50),
             child: const SizedBox(),
           )
         ],

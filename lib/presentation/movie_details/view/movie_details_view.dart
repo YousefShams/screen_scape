@@ -36,8 +36,9 @@ class MovieDetailsScreen extends StatelessWidget {
                       children: [
                         MovieDetailsInfo(
                             icon: Icons.date_range_rounded,
-                            info: "${media.releaseDate.getDateTime().year}-"
-                                "${media.releaseDate.getDateTime().month}"
+                            info: (media.releaseDate==null) ? "TBD" :
+                            "${media.releaseDate!.getDateTime().year}-"
+                                "${media.releaseDate!.getDateTime().month}"
                         ),
                         const SizedBox(width: 10),
                         MovieDetailsInfo(info: media.popularity.round().toString(),

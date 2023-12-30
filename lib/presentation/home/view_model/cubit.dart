@@ -40,10 +40,14 @@ class HomeCubit extends Cubit<HomeState> {
     currentIndex = paths is MoviesPaths ? 0 : 1;
     final nowPlayingMoviesPage = await _getMediaList("${paths.basePath}${paths.topPath}");
     nowPlayingMedia.addAll(List<Media>.from(nowPlayingMoviesPage));
-    nowPlayingMedia.sort((a,b)=> b.releaseDate.getDateTime().millisecondsSinceEpoch
-        .compareTo(a.releaseDate.getDateTime().millisecondsSinceEpoch));
+    nowPlayingMedia.sort((a,b) {
+      final bDateTime = (b.releaseDate!=null) ? b.releaseDate!.getDateTime() : DateTime(10000);
+      final aDateTime = (a.releaseDate!=null) ? a.releaseDate!.getDateTime() : DateTime(10000);
+      return bDateTime.millisecondsSinceEpoch.compareTo(aDateTime.millisecondsSinceEpoch);
+    });
     nowPlayingColors = getColors(nowPlayingMedia.length);
     topRatedMedia = List<Media>.from(await _getMediaList("${paths.basePath}${Paths.topRatedPath}"));
+
     genresMedia = List<List<Media>>.from(await _getMediaOfGenres());
   }
 
